@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { request, setAuthHeader } from './helpers/axios_helper.js';
+import { request, setAuthHeader } from '../helpers/axios_helper.js';
 import { useNavigate } from 'react-router-dom';
 
 import Buttons from './Buttons';
 import LoginForm from './LoginForm';
 import WelcomeContent from './WelcomeContent';
 
-export default function AuthPage() {
+export default function AuthPage({ setIsLoggedIn }) { // Принимаем setIsLoggedIn
     const [componentToShow, setComponentToShow] = React.useState("welcome");
     const navigate = useNavigate();
 
@@ -17,6 +17,7 @@ export default function AuthPage() {
     const logout = () => {
         setComponentToShow("welcome");
         setAuthHeader(null);
+        setIsLoggedIn(false); // Сбрасываем авторизацию
     };
 
     const onLogin = (e, username, password) => {
@@ -29,6 +30,7 @@ export default function AuthPage() {
                 password: password
             }).then((response) => {
                 setAuthHeader(response.data.token);
+                setIsLoggedIn(true); // Устанавливаем авторизацию
                 navigate("/events"); // После логина переходим на EventApp
             }).catch((error) => {
                 setAuthHeader(null);
@@ -49,6 +51,7 @@ export default function AuthPage() {
                 password: password
             }).then((response) => {
                 setAuthHeader(response.data.token);
+                setIsLoggedIn(true); // Устанавливаем авторизацию
                 navigate("/events"); // После регистрации переходим на EventApp
             }).catch((error) => {
                 setAuthHeader(null);

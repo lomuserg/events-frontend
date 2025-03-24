@@ -1,0 +1,135 @@
+/* ===== Общие стили ===== */
+.appContainer {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 60px; /* Отступ под фиксированный хедер */
+}
+
+/* ===== Хедер ===== */
+.header, 
+.eventHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px; /* Фиксированная высота */
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header {
+  background: #fff; /* Светлый фон */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.iconMenu {
+  height: 40px; /* Размер логотипа */
+  margin-right: 10px;
+}
+
+/* ===== Основной контент ===== */
+.mainContent {
+  flex: 1;
+  padding: 80px 20px 20px; /* Отступ сверху для фиксированного хедера */
+  overflow-y: auto;
+}
+
+.mainTitle {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* ===== Сайдбар ===== */
+.sidebar {
+  width: 250px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== Темы ===== */
+.darkMode {
+  background: #222735;
+  color: white;
+}
+
+.lightMode {
+  background: #92b5d9;
+  color: black;
+}
+
+/* ===== Навигация ===== */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navItem svg {
+  margin-right: 8px;
+}
+
+.navItem:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== Карточки ===== */
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .card {
+  background: #333;
+  color: white;
+}
+
+.lightMode .card {
+  background: #c6d4d9;
+  color: black;
+}
+
+/* ===== Кнопка смены темы ===== */
+.themeToggle {
+  margin-top: auto;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.themeToggle svg {
+  margin-right: 8px;
+}
+
+.themeToggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { request, setAuthHeader } from "./AuthComponents/helpers/axios_helper.js";
+import { request, setAuthHeader } from "./helpers/axios_helper.js";
 import Buttons from "./AuthComponents/Buttons.js";
 import AuthContent from "./AuthComponents/AuthContent.js";
 import LoginForm from "./AuthComponents/LoginForm.js";

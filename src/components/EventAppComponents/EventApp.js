@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Calendar, Bell, Megaphone, Sun, Moon } from "lucide-react";
 
-import './EventApp.css';
+import styles from "./EventApp.module.css"; // Подключаем CSS-модуль
 
 export default function EventApp() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -11,30 +11,25 @@ export default function EventApp() {
   };
 
   return (
-    <div className={`app-container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+    <div className={`${styles.appContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
       {/* Sidebar */}
-      <aside className={`sidebar ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+      <aside className={`${styles.sidebar} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
 
-        <h1 className="title">
-          <img src={`${process.env.PUBLIC_URL}/EVENTS_LOGO3.png`} alt="Главная" className="iconMenu" />
-          Events
-        </h1>
-
-        <nav className="nav">
-          <button className={`nav-item ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+        <nav className={styles.nav}>
+          <button className={`${styles.navItem} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
             <Megaphone size={20} />  Мероприятия
           </button>
 
-          <button className={`nav-item ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+          <button className={`${styles.navItem} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
             <Calendar size={20} />  Календарь
           </button>
 
-          <button className={`nav-item ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+          <button className={`${styles.navItem} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
             <Bell size={20} />  Уведомления
           </button>
         </nav>
 
-        <button className={`nav-item theme-toggle ${isDarkMode ? 'dark-mode' : 'light-mode'}`} onClick={toggleTheme}>
+        <button className={`${styles.navItem} ${styles.themeToggle} ${isDarkMode ? styles.darkMode : styles.lightMode}`} onClick={toggleTheme}>
           {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           {isDarkMode ? "Светлая тема" : "Тёмная тема"}
         </button>
@@ -42,16 +37,15 @@ export default function EventApp() {
       </aside>
 
       {/* Main Content */}
-      <main className="main-content">
-        <h2 className="main-title">Главная</h2>
-        <div className={`card-container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
-          <div className={`card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>Мероприятие 1</div>
-          <div className={`card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>Мероприятие 2</div>
-          <div className={`card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>Мероприятие 3</div>
-          <div className={`card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>Мероприятие 4</div>
+      <main className={styles.mainContent}>
+        <h2 className={styles.mainTitle}>Главная</h2>
+        <div className={`${styles.cardContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
+          <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Мероприятие 1</div>
+          <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Мероприятие 2</div>
+          <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Мероприятие 3</div>
+          <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Мероприятие 4</div>
         </div>
       </main>
-
     </div>
   );
 }
