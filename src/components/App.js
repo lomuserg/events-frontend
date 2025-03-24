@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useState} from "react";
+import { useState, useEffect } from "react";
 import logo from '../logo.svg';
 import styles from './App.css';
 
@@ -13,10 +13,17 @@ function App() {
     return localStorage.getItem("token") ? true : false;
   });
 
-  // Функция выхода
+  // Следим за изменением isLoggedIn и обновляем localStorage
+  useEffect(() => {
+    if (isLoggedIn) {
+      localStorage.setItem("token", "userToken"); // Просто заглушка токена
+    } else {
+      localStorage.removeItem("token");
+    }
+  }, [isLoggedIn]);
+
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Удаляем токен
-    setIsLoggedIn(false); // Обновляем состояние
+    setIsLoggedIn(false); // Сбрасываем состояние (но не трогаем токен)
   };
 
   return (

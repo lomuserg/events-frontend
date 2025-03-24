@@ -13,8 +13,7 @@ export default function EventApp({ setIsLoggedIn }) { // Принимаем setI
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // Выходим
-    navigate("/"); // Перенаправляем на страницу авторизации
+    navigate("/"); // Перенаправляем на Welcome
   };
 
   return (

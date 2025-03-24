@@ -15,7 +15,9 @@ export default function AuthPage({ setIsLoggedIn }) {
   const logout = () => {
     setComponentToShow("welcome");
     setAuthHeader(null);
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
+    navigate("/");
   };
 
   const onLogin = (e, username, password) => {
@@ -56,7 +58,6 @@ export default function AuthPage({ setIsLoggedIn }) {
 
   return (
     <div className="app-container">
-      {/* Сайдбар слева */}
       <div className="sidebar">
         <button className="btn btn-primary" onClick={login}>
           Login
@@ -66,7 +67,6 @@ export default function AuthPage({ setIsLoggedIn }) {
         </button>
       </div>
 
-      {/* Основной контент справа */}
       <div className="content">
         {componentToShow === "welcome" && <WelcomeContent />}
         {componentToShow === "login" && <LoginForm onLogin={onLogin} onRegister={onRegister} />}

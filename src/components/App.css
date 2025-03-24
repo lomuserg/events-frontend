@@ -9,16 +9,7 @@ body {
   text-align: center;
 }
 
-/* Общие стили для режимов */
-.mode {
-  background-color: #f9f9f9;
-}
-
-.dark-mode {
-  background-color: #222;
-  color: white;
-}
-
+/* Хедер */
 .App-header {
   background-color: #222;
   height: 100px;
@@ -27,36 +18,82 @@ body {
   justify-content: center;
   color: white;
   font-size: 1.8em;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
-.App-logo {
-  height: 60px;
-  margin-right: 10px;
+/* Основной контейнер */
+.app-container {
+  display: flex;
+  margin-top: 100px; /* Учитываем хедер */
+  height: calc(100vh - 100px); /* Высота без учета хедера */
 }
 
-.container {
-  max-width: 500px;
-  margin: auto;
-  background: white;
+/* Левая боковая панель */
+.sidebar {
+  width: 200px;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 100px; /* Хедер */
+}
+
+/* Кнопки в сайдбаре */
+.sidebar button {
+  width: 100%;
+  margin: 10px 0;
+}
+
+/* Контентная часть */
+.content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px;
+  margin-left: 220px; /* Чтобы не наезжало на sidebar */
+}
+
+/* Контейнер формы */
+.container {
+  width: 80%;
+  max-width: 800px;
+  background: white;
+  padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-/* Общие стили для форм */
+/* Форма */
 .form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
+/* Поля ввода */
 .input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  width: 100%;
 }
 
+/* Кнопки */
 .button {
   padding: 10px;
   background-color: #007bff;
@@ -72,6 +109,7 @@ body {
   background-color: #0056b3;
 }
 
+/* Ссылки */
 .link {
   color: #007bff;
   cursor: pointer;
@@ -81,37 +119,4 @@ body {
 
 .link:hover {
   text-decoration: underline;
-}
-
-.app-container {
-  display: flex;
-  height: 100vh;
-}
-
-.sidebar {
-  width: 200px;
-  background: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar button {
-  width: 100%;
-  margin: 10px 0;
-}
-
-.content {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.app-container {
-  display: flex;
-  height: calc(100vh - 100px); /* Убираем 100px под хедер */
-  margin-top: 100px; /* Отступ, чтобы контент не закрывался */
 }

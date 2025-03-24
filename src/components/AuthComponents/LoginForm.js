@@ -1,99 +1,186 @@
-
-import * as React from 'react';
-import classNames from 'classnames';
+import * as React from "react";
+import classNames from "classnames";
+import { Navigate } from "react-router-dom";
 
 export default class LoginForm extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            active: "login",
-            firstName: "",
-            lastName: "",
-            login: "",
-            password: "",
-            onLogin: props.onLogin,
-            onRegister: props.onRegister
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: "login",
+      firstName: "",
+      lastName: "",
+      login: "",
+      password: "",
+      redirect: false, // Для редиректа
     };
+  }
 
-    onChangeHandler = (event) => {
-        let name = event.target.name;
-        let value = event.target.value;
-        this.setState({[name] : value});
-    };
+  onChangeHandler = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
-    onSubmitLogin = (e) => {
-        this.state.onLogin(e, this.state.login, this.state.password);
-    };
+  onSubmitLogin = async (e) => {
+    e.preventDefault();
+    const { login, password } = this.state;
+    const success = await this.props.onLogin(e, login, password);
+    if (success) this.setState({ redirect: true }); // Если логин успешен -> редирект
+  };
 
-    onSubmitRegister = (e) => {
-        this.state.onRegister(e, this.state.firstName, this.state.lastName, this.state.login, this.state.password);
-    };
+  onSubmitRegister = async (e) => {
+    e.preventDefault();
+    const { firstName, lastName, login, password } = this.state;
+    const success = await this.props.onRegister(e, firstName, lastName, login, password);
+    if (success) this.setState({ redirect: true }); // Если регистрация успешна -> редирект
+  };
 
-    render() {
-        return (
+  render() {
+    if (this.state.redirect) {
+      return <Navigate to="/dashboard" />; // Редирект после успешного входа
+    }
+
+    return (
+      <div className="container mt-5">
         <div className="row justify-content-center">
-            <div className="col-4">
-            <ul className="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-              <li className="nav-item" role="presentation">
-                <button className={classNames("nav-link", this.state.active === "login" ? "active" : "")} id="tab-login"
-                  onClick={() => this.setState({active: "login"})}>Login</button>
-              </li>
-              <li className="nav-item" role="presentation">
-                <button className={classNames("nav-link", this.state.active === "register" ? "active" : "")} id="tab-register"
-                  onClick={() => this.setState({active: "register"})}>Register</button>
-              </li>
-            </ul>
+          <div className="col-md-6 col-lg-5">
+            <div className="card shadow-lg rounded-3">
+              <div className="card-body p-4">
+                {/* Переключение вкладок */}
+                <ul className="nav nav-pills nav-justified mb-4">
+                  <li className="nav-item">
+                    <button
+                      className={classNames("nav-link", {
+                        active: this.state.active === "login",
+                      })}
+                      onClick={() => this.setState({ active: "login" })}
+                    >
+                      Вход
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className={classNames("nav-link", {
+                        active: this.state.active === "register",
+                      })}
+                      onClick={() => this.setState({ active: "register" })}
+                    >
+                      Регистрация
+                    </button>
+                  </li>
+                </ul>
 
-            <div className="tab-content">
-              <div className={classNames("tab-pane", "fade", this.state.active === "login" ? "show active" : "")} id="pills-login" >
-                <form onSubmit={this.onSubmitLogin}>
+                {/* Форма входа */}
+                {this.state.active === "login" && (
+                  <form onSubmit={this.onSubmitLogin}>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="loginName">
+                        Логин
+                      </label>
+                      <input
+                        type="text"
+                        id="loginName"
+                        name="login"
+                        className="form-control"
+                        placeholder="Введите логин"
+                        onChange={this.onChangeHandler}
+                        required
+                      />
+                    </div>
 
-                  <div className="form-outline mb-4">
-                    <input type="login" id="loginName" name= "login" className="form-control" onChange={this.onChangeHandler}/>
-                    <label className="form-label" htmlFor="loginName">Username</label>
-                  </div>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="loginPassword">
+                        Пароль
+                      </label>
+                      <input
+                        type="password"
+                        id="loginPassword"
+                        name="password"
+                        className="form-control"
+                        placeholder="Введите пароль"
+                        onChange={this.onChangeHandler}
+                        required
+                      />
+                    </div>
 
-                  <div className="form-outline mb-4">
-                    <input type="password" id="loginPassword" name="password" className="form-control" onChange={this.onChangeHandler}/>
-                    <label className="form-label" htmlFor="loginPassword">Password</label>
-                  </div>
+                    <button type="submit" className="btn btn-primary w-100">
+                      Войти
+                    </button>
+                  </form>
+                )}
 
-                  <button type="submit" className="btn btn-primary btn-block mb-4">Sign in</button>
+                {/* Форма регистрации */}
+                {this.state.active === "register" && (
+                  <form onSubmit={this.onSubmitRegister}>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="firstName">
+                        Имя
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        className="form-control"
+                        placeholder="Введите имя"
+                        onChange={this.onChangeHandler}
+                        required
+                      />
+                    </div>
 
-                </form>
-              </div>
-              <div className={classNames("tab-pane", "fade", this.state.active === "register" ? "show active" : "")} id="pills-register" >
-                <form onSubmit={this.onSubmitRegister}>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="lastName">
+                        Фамилия
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        className="form-control"
+                        placeholder="Введите фамилию"
+                        onChange={this.onChangeHandler}
+                        required
+                      />
+                    </div>
 
-                  <div className="form-outline mb-4">
-                    <input type="text" id="firstName" name="firstName" className="form-control" onChange={this.onChangeHandler}/>
-                    <label className="form-label" htmlFor="firstName">First name</label>
-                  </div>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="registerLogin">
+                        Логин
+                      </label>
+                      <input
+                        type="text"
+                        id="registerLogin"
+                        name="login"
+                        className="form-control"
+                        placeholder="Придумайте логин"
+                        onChange={this.onChangeHandler}
+                        required
+                      />
+                    </div>
 
-                  <div className="form-outline mb-4">
-                    <input type="text" id="lastName" name="lastName" className="form-control" onChange={this.onChangeHandler}/>
-                    <label className="form-label" htmlFor="lastName">Last name</label>
-                  </div>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="registerPassword">
+                        Пароль
+                      </label>
+                      <input
+                        type="password"
+                        id="registerPassword"
+                        name="password"
+                        className="form-control"
+                        placeholder="Придумайте пароль"
+                        onChange={this.onChangeHandler}
+                        required
+                      />
+                    </div>
 
-                  <div className="form-outline mb-4">
-                    <input type="text" id="login" name="login" className="form-control" onChange={this.onChangeHandler}/>
-                    <label className="form-label" htmlFor="login">Username</label>
-                  </div>
-
-                  <div className="form-outline mb-4">
-                    <input type="password" id="registerPassword" name="password" className="form-control" onChange={this.onChangeHandler}/>
-                    <label className="form-label" htmlFor="registerPassword">Password</label>
-                  </div>
-
-                  <button type="submit" className="btn btn-primary btn-block mb-3">Sign in</button>
-                </form>
+                    <button type="submit" className="btn btn-success w-100">
+                      Зарегистрироваться
+                    </button>
+                  </form>
+                )}
               </div>
             </div>
-            </div>
+          </div>
         </div>
-        );
-    };
-
+      </div>
+    );
+  }
 }
