@@ -1,10 +1,17 @@
-import * as React from 'react';
+import React from "react";
+import styles from "./EventAppComponents/EventApp.module.css"; // Подключаем стили EventApp
 
-export default function Header(props) {
+export default function Header({ pageTitle, logoSrc }) {
   return (
-    <header className="App-header">
-      <img src={props.logoSrc} className="App-logo" alt="logo" />
-      <h1 className="App-title">{props.pageTitle}</h1>
+    <header className={styles.eventHeader}>
+     <h1 className={styles.title}>
+        <img
+          src={`${process.env.PUBLIC_URL}/EVENTS_LOGO3.png`}
+          alt="Главная"
+          className={styles.iconMenu}
+        />
+        Events
+      </h1>
     </header>
   );
-};
+}

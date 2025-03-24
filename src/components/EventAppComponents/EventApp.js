@@ -1,13 +1,20 @@
 import { useState } from "react";
-import { Calendar, Bell, Megaphone, Sun, Moon } from "lucide-react";
+import { Calendar, Bell, Megaphone, Sun, Moon, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./EventApp.module.css"; // Подключаем CSS-модуль
 
-export default function EventApp() {
+export default function EventApp({ setIsLoggedIn }) { // Принимаем setIsLoggedIn
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false); // Выходим
+    navigate("/"); // Перенаправляем на страницу авторизации
   };
 
   return (
@@ -32,6 +39,11 @@ export default function EventApp() {
         <button className={`${styles.navItem} ${styles.themeToggle} ${isDarkMode ? styles.darkMode : styles.lightMode}`} onClick={toggleTheme}>
           {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           {isDarkMode ? "Светлая тема" : "Тёмная тема"}
+        </button>
+
+        {/* Кнопка выхода */}
+        <button className={`${styles.navItem} ${styles.logoutButton}`} onClick={handleLogout}>
+          <LogOut size={20} /> Выход
         </button>
 
       </aside>
