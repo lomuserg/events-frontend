@@ -2,19 +2,17 @@
 .appContainer {
   display: flex;
   min-height: 100vh;
-  padding-top: 60px; /* Отступ под фиксированный хедер */
+  padding-top: 60px;
 }
 
-/* ===== Хедер ===== */
-.header, 
-.eventHeader {
+.header, .eventHeader {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   color: white;
   z-index: 1000;
 }
@@ -39,7 +37,8 @@
 /* ===== Основной контент ===== */
 .mainContent {
   flex: 1;
-  padding: 80px 20px 20px; /* Отступ сверху для фиксированного хедера */
+  margin-left: 250px;
+  padding: 80px 20px 20px;
   overflow-y: auto;
 }
 
@@ -50,24 +49,26 @@
 
 /* ===== Сайдбар ===== */
 .sidebar {
+  position: fixed;
+  left: 0;
+  top: 100px;
   width: 250px;
+  height: calc(100vh - 60px);
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease;
+  overflow-y: auto;
+  z-index: 999;
 }
+
+.darkMode .sidebar { background-color: #1a1e22; }
+.lightMode .sidebar { background-color: #dfe8f1; }
 
 /* ===== Темы ===== */
-.darkMode {
-  background: #222735;
-  color: white;
-}
-
-.lightMode {
-  background: #92b5d9;
-  color: black;
-}
+.darkMode { background: #222735; color: white; }
+.lightMode { background: #92b5d9; color: black; }
 
 /* ===== Навигация ===== */
 .nav {
@@ -82,16 +83,16 @@
   padding: 10px;
   border: none;
   cursor: pointer;
+  background-color: transparent;
   transition: background-color 0.3s ease;
 }
 
-.navItem svg, .themeToggle svg {
-  margin-right: 8px;
-}
+.navItem svg, .themeToggle svg { margin-right: 8px; }
 
-.navItem:hover, .themeToggle:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
+.darkMode .navItem { background-color: #1a1e25; color: white; }
+.lightMode .navItem { background-color: #e0e7f1; color: black; }
+
+.navItem:hover, .themeToggle:hover { background-color: rgba(255, 255, 255, 0.2); }
 
 /* ===== Карточки ===== */
 .cardContainer {
@@ -107,17 +108,10 @@
   transition: background-color 0.3s ease;
 }
 
-.darkMode .card {
-  background: #333;
-  color: white;
-}
+.darkMode .card { background: #4a4949; color: white; }
+.lightMode .card { background: #c6d4d9; color: black; }
 
-.lightMode .card {
-  background: #c6d4d9;
-  color: black;
-}
-
-/* ===== Кнопка смены темы ===== */
+/* ===== Кнопки ===== */
 .themeToggle, .logoutButton {
   margin-top: auto;
   padding: 10px;
