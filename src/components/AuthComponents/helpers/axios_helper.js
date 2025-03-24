@@ -29,4 +29,4 @@ export const request = (method, url, data) => {
         url: url,
         headers: headers,
         data: data});
-};
+  };
