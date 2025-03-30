@@ -29,8 +29,8 @@ body {
 /* Основной контейнер */
 .app-container {
   display: flex;
-  margin-top: 100px; /* Учитываем хедер */
   height: calc(100vh - 100px); /* Высота без учета хедера */
+  max-height: 100%;
 }
 
 /* Левая боковая панель */
@@ -57,14 +57,12 @@ body {
 .content {
   flex-grow: 1;
   display: flex;
-  align-items: flex-start; /* Выравнивание по левому краю */
-  justify-content: flex-start; /* Контент начинается сверху */
+  align-items: center; /* Выравнивание по левому краю */
+  justify-content: center; /* Контент начинается сверху */
   flex-direction: column;
-  max-width: 1200px; /* Ограничение по ширине */
+  max-width: 1000%; /* Ограничение по ширине */
   width: 100%;
   margin: auto;
-  padding: 15px;
-  margin-left: 220px;
   min-height: calc(100vh - 100px); /* Минимальная высота */
   height: 120px; /* Позволяет увеличиваться, если контента больше */
   max-height: 120px; /* Без ограничений по высоте */
@@ -73,14 +71,13 @@ body {
 
 /* Контейнер формы */
 .container {
-  width: 100%;
-  max-width: 700px;
+  min-width: 80%;
+  min-height: 80%;
+  max-width: 100%;
   background: #c9f1ff;
-  padding: 50px; /* Было 180px */
+  padding: 70px; /* Было 180px */
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  margin-top: 20px; /* Добавьте небольшой отступ сверху */
 }
 
 /* Форма */

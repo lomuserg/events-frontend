@@ -11,7 +11,7 @@ export default class LoginForm extends React.Component {
       lastName: "",
       login: "",
       password: "",
-      redirect: false, // Для редиректа
+      redirect: false,
     };
   }
 
