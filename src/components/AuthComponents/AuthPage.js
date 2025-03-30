@@ -1,59 +1,56 @@
 import * as React from "react";
-import { request, setAuthHeader } from "../helpers/axios_helper.js";
+import { request, setAuthHeader } from "../helpers/axios_helper";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import WelcomeContent from "./WelcomeContent";
 
-export default function AuthPage({ setIsLoggedIn }) {
+export default function AuthPage({ onLogin }) {
   const [componentToShow, setComponentToShow] = React.useState("welcome");
   const navigate = useNavigate();
 
-  const login = () => {
-    setComponentToShow("login");
-  };
-
+  const login = () => setComponentToShow("login");
   const logout = () => {
     setComponentToShow("welcome");
     setAuthHeader(null);
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
     navigate("/");
   };
 
-  const onLogin = (e, username, password) => {
-    e.preventDefault();
-    request("POST", "/login", {
-      login: username,
-      password: password,
-    })
-      .then((response) => {
-        setAuthHeader(response.data.token);
-        setIsLoggedIn(true);
-        navigate("/events");
-      })
-      .catch(() => {
-        setAuthHeader(null);
-        setComponentToShow("welcome");
-      });
+  const handleLoginSuccess = (token) => {
+    setAuthHeader(token);
+    onLogin(); // Вызываем колбэк из App.js для обновления состояния
+    navigate("/events");
   };
 
-  const onRegister = (event, firstName, lastName, username, password) => {
-    event.preventDefault();
-    request("POST", "/register", {
-      firstName: firstName,
-      lastName: lastName,
-      login: username,
-      password: password,
-    })
-      .then((response) => {
-        setAuthHeader(response.data.token);
-        setIsLoggedIn(true);
-        navigate("/events");
-      })
-      .catch(() => {
-        setAuthHeader(null);
-        setComponentToShow("welcome");
+  const handleLogin = async (e, username, password) => {
+    e.preventDefault();
+    try {
+      const response = await request.post("/login", {
+        login: username,
+        password: password,
       });
+      handleLoginSuccess(response.data.token);
+    } catch (err) {
+      console.error("Login failed:", err);
+      setComponentToShow("welcome");
+      alert(err.response?.data?.message || "Login failed");
+    }
+  };
+
+  const onRegister = async (event, firstName, lastName, username, password) => {
+    event.preventDefault();
+    try {
+      const response = await request.post("/register", {
+        firstName: firstName,
+        lastName: lastName,
+        login: username,
+        password: password,
+      });
+      handleLoginSuccess(response.data.token);
+    } catch (err) {
+      console.error("Registration failed:", err);
+      setComponentToShow("welcome");
+      alert(err.response?.data?.message || "Registration failed");
+    }
   };
 
   return (
@@ -69,7 +66,9 @@ export default function AuthPage({ setIsLoggedIn }) {
 
       <div className="content">
         {componentToShow === "welcome" && <WelcomeContent />}
-        {componentToShow === "login" && <LoginForm onLogin={onLogin} onRegister={onRegister} />}
+        {componentToShow === "login" && (
+          <LoginForm onLogin={handleLogin} onRegister={onRegister} />
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./EventApp.module.css"; // Убедись, что CSS-модуль подключён
+import styles from "./EventApp.module.css";
 
-export default function EventHeader() {
+export default function EventHeader({ user }) {
   return (
     <header className={styles.eventHeader}>
       <h1 className={styles.title}>
@@ -10,7 +10,7 @@ export default function EventHeader() {
           alt="Главная"
           className={styles.iconMenu}
         />
-        Events
+        Events {user && `| ${user.firstName}`}
       </h1>
     </header>
   );

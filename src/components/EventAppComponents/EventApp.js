@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Calendar, Bell, Megaphone, Sun, Moon, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { setAuthHeader } from "../helpers/axios_helper";
 
-import styles from "./EventApp.module.css"; // Подключаем CSS-модуль
+import styles from "./EventApp.module.css";
 
-export default function EventApp({ setIsLoggedIn }) {
+export default function EventApp() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const navigate = useNavigate();
 
@@ -13,7 +14,10 @@ export default function EventApp({ setIsLoggedIn }) {
   };
 
   const handleLogout = () => {
-    navigate("/"); // Перенаправляем на Welcome
+    setAuthHeader(null); // Очищаем токен
+    localStorage.removeItem("auth_token"); // Дополнительная очистка
+    navigate("/"); // Перенаправляем на главную
+    window.location.reload(); // Принудительно обновляем страницу
   };
 
   return (
@@ -38,7 +42,10 @@ export default function EventApp({ setIsLoggedIn }) {
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             {isDarkMode ? "Светлая тема" : "Тёмная тема"}
           </button>
-          <button className={`${styles.navItem} ${styles.fullWidthButton} ${isDarkMode ? styles.darkMode : styles.lightMode}`} onClick={handleLogout}>
+          <button 
+            className={`${styles.navItem} ${styles.fullWidthButton} ${isDarkMode ? styles.darkMode : styles.lightMode}`} 
+            onClick={handleLogout}
+          >
             <LogOut size={20} /> Выход
           </button>
         </div>

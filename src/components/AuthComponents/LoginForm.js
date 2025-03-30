@@ -12,31 +12,40 @@ export default class LoginForm extends React.Component {
       login: "",
       password: "",
       redirect: false,
+      error: "" // Добавим состояние для ошибок
     };
   }
 
   onChangeHandler = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, error: "" }); // Сбрасываем ошибку при изменении поля
   };
 
   onSubmitLogin = async (e) => {
     e.preventDefault();
-    const { login, password } = this.state;
-    const success = await this.props.onLogin(e, login, password);
-    if (success) this.setState({ redirect: true }); // Если логин успешен -> редирект
+    try {
+      const { login, password } = this.state;
+      await this.props.onLogin(e, login, password);
+      this.setState({ redirect: true });
+    } catch (error) {
+      this.setState({ error: "Неверный логин или пароль" });
+    }
   };
 
   onSubmitRegister = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, login, password } = this.state;
-    const success = await this.props.onRegister(e, firstName, lastName, login, password);
-    if (success) this.setState({ redirect: true }); // Если регистрация успешна -> редирект
+    try {
+      const { firstName, lastName, login, password } = this.state;
+      await this.props.onRegister(e, firstName, lastName, login, password);
+      this.setState({ redirect: true });
+    } catch (error) {
+      this.setState({ error: "Ошибка регистрации. Возможно, логин уже занят." });
+    }
   };
 
   render() {
     if (this.state.redirect) {
-      return <Navigate to="/dashboard" />; // Редирект после успешного входа
+      return <Navigate to="/events" />; // Меняем /dashboard на /events
     }
 
     return (
@@ -45,14 +54,21 @@ export default class LoginForm extends React.Component {
           <div className="col-md-6 col-lg-5">
             <div className="card shadow-lg rounded-3">
               <div className="card-body p-4">
-                {/* Переключение вкладок */}
+                {/* Вывод ошибок (добавляем блок) */}
+                {this.state.error && (
+                  <div className="alert alert-danger mb-4">
+                    {this.state.error}
+                  </div>
+                )}
+
+                {/* Переключение вкладок (оставляем без изменений) */}
                 <ul className="nav nav-pills nav-justified mb-4">
                   <li className="nav-item">
                     <button
                       className={classNames("nav-link", {
                         active: this.state.active === "login",
                       })}
-                      onClick={() => this.setState({ active: "login" })}
+                      onClick={() => this.setState({ active: "login", error: "" })}
                     >
                       Вход
                     </button>
@@ -62,14 +78,14 @@ export default class LoginForm extends React.Component {
                       className={classNames("nav-link", {
                         active: this.state.active === "register",
                       })}
-                      onClick={() => this.setState({ active: "register" })}
+                      onClick={() => this.setState({ active: "register", error: "" })}
                     >
                       Регистрация
                     </button>
                   </li>
                 </ul>
 
-                {/* Форма входа */}
+                {/* Форма входа (без изменений) */}
                 {this.state.active === "login" && (
                   <form onSubmit={this.onSubmitLogin}>
                     <div className="mb-3">
@@ -108,7 +124,7 @@ export default class LoginForm extends React.Component {
                   </form>
                 )}
 
-                {/* Форма регистрации */}
+                {/* Форма регистрации (без изменений) */}
                 {this.state.active === "register" && (
                   <form onSubmit={this.onSubmitRegister}>
                     <div className="mb-3">
