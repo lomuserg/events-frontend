@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
-import { getAuthToken, request} from "./helpers/axios_helper";
+import { getAuthToken, request } from "./helpers/axios_helper";
 import logo from '../logo.svg';
 import styles from './App.css';
 
@@ -17,6 +17,24 @@ function App() {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
   });
+  const [loading, setLoading] = useState(true); // Для отслеживания состояния загрузки
+
+  const fetchUserData = async () => {
+    try {
+      const response = await request.get("/user"); // Запрос к /user
+      const userData = response.data;
+      setUser(userData); // Обновляем состояние
+      localStorage.setItem("user", JSON.stringify(userData)); // Сохраняем данные в localStorage
+    } catch (error) {
+      console.error("Ошибка загрузки пользователя:", error);
+      if (error.response && error.response.data) {
+        alert(error.response.data); // Показать сообщение об ошибке от сервера
+      } else {
+        alert("Неизвестная ошибка");
+      }
+    }
+  };
+  
 
   const decodeToken = (token) => {
     try {
@@ -30,18 +48,6 @@ function App() {
       return null;
     }
   };
-
-  const fetchUserData = useCallback(async () => {
-    try {
-      const response = await request.get("/user"); // API для получения данных пользователя
-      const userData = response.data;
-      localStorage.setItem("user", JSON.stringify(userData));
-      setUser(userData);
-    } catch (error) {
-      console.error("Ошибка получения данных пользователя:", error);
-      handleLogout();
-    }
-  }, []);
 
   const verifyToken = useCallback(() => {
     const token = getAuthToken();
@@ -61,9 +67,8 @@ function App() {
       handleLogout();
     } else {
       setIsLoggedIn(true);
-      fetchUserData();
     }
-  }, [fetchUserData]);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("auth_token");
@@ -75,6 +80,18 @@ function App() {
   useEffect(() => {
     verifyToken();
   }, [verifyToken]);
+
+  // Загружаем данные пользователя после успешной аутентификации
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchUserData(); // Загружаем данные пользователя
+    }
+    setLoading(false); // После выполнения проверки и загрузки данных убираем загрузку
+  }, [isLoggedIn]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Отображение загрузки до тех пор, пока не закончится проверка аутентификации
+  }
 
   return (
     <Router>
@@ -91,12 +108,8 @@ function App() {
           </div>
           <div className={styles.content}>
             <Routes>
-              <Route path="/" element={
-                isLoggedIn ? <Navigate to="/events" /> : <AuthPage onLogin={verifyToken} />
-              } />
-              <Route path="/events" element={
-                isLoggedIn ? <EventApp user={user} /> : <Navigate to="/" />
-              } />
+              <Route path="/" element={isLoggedIn ? <Navigate to="/events" /> : <AuthPage onLogin={verifyToken} />} />
+              <Route path="/events" element={isLoggedIn ? <EventApp user={user} /> : <Navigate to="/" />} />
             </Routes>
           </div>
         </div>
