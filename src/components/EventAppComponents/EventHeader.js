@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./EventApp.module.css";
 
 export default function EventHeader({ user }) {

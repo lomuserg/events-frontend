@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setAuthHeader } from "../helpers/axios_helper";
 
-import Sidebar from "./Sidebar";
+import { Routes, Route } from 'react-router-dom';
+import Events from '../EventAppComponents/SidebarMenus/Events'; 
+import Calendar from '../EventAppComponents/SidebarMenus/Calendar'; 
+import Notifications from "./SidebarMenus/Notifications";
+import CreateEvent from "./SidebarMenus/CreateEvent";
+import WelcomeEvents from "./WelcomeEvents"; 
+import Sidebar from "./SidebarEvents";
 import styles from "./EventApp.module.css";
 
 export default function EventApp() {
@@ -28,15 +34,14 @@ export default function EventApp() {
         handleLogout={handleLogout} 
       />
 
-      <main className={styles.mainContent}>
-        <h2 className={styles.mainTitle}>Главная</h2>
-        <div className={`${styles.cardContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
-          <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Мероприятие 1</div>
-          <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Мероприятие 2</div>
-          <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Мероприятие 3</div>
-          <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Мероприятие 4</div>
-        </div>
-      </main>
-    </div>
+        <Routes>
+        <Route path="/" element={<WelcomeEvents />} />
+          <Route path="/events" element={<Events isDarkMode={isDarkMode} />} />
+          <Route path="/calendar" element={<Calendar isDarkMode={isDarkMode} />} />
+          <Route path="/notifications" element={<Notifications isDarkMode={isDarkMode} />} />
+          <Route path="/create-event" element={<CreateEvent isDarkMode={isDarkMode} />} />
+        </Routes>
+      </div>
+     
   );
 }

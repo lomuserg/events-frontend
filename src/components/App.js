@@ -108,8 +108,8 @@ function App() {
           </div>
           <div className={styles.content}>
             <Routes>
-              <Route path="/" element={isLoggedIn ? <Navigate to="/events" /> : <AuthPage onLogin={verifyToken} />} />
-              <Route path="/events" element={isLoggedIn ? <EventApp user={user} /> : <Navigate to="/" />} />
+              <Route path="/" element={isLoggedIn ? <Navigate to="/main/*" /> : <AuthPage onLogin={verifyToken} />} />
+              <Route path="/main/*" element={isLoggedIn ? <EventApp user={user} /> : <Navigate to="/" />} />
             </Routes>
           </div>
         </div>
