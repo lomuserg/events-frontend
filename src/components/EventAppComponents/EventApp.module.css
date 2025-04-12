@@ -1,0 +1,132 @@
+/* ===== Общие стили ===== */
+.appContainer {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 60px;
+}
+
+.header, .eventHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+  z-index: 1000;
+}
+
+.header {
+  height: 60px;
+  background: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.eventHeader {
+  height: 100px;
+  background-color: #222;
+  font-size: 1.8em;
+}
+
+.iconMenu {
+  height: 60px;
+  margin-right: 10px;
+}
+
+/* ===== Основной контент ===== */
+.mainContent {
+  flex: 1;
+  margin-left: 250px;
+  padding: 80px 20px 20px;
+  overflow-y: auto;
+}
+
+.mainTitle {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* ===== Сайдбар ===== */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 100px;
+  width: 250px;
+  height: calc(100vh - 60px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: background-color 0.3s ease;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.darkMode .sidebar { background-color: #1a1e22; }
+.lightMode .sidebar { background-color: #dfe8f1; }
+
+/* ===== Темы ===== */
+.darkMode { background: #222735; color: white; }
+.lightMode { background: #92b5d9; color: black; }
+
+/* ===== Навигация ===== */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.navItem svg, .themeToggle svg { margin-right: 8px; }
+
+.darkMode .navItem { background-color: #1a1e25; color: white; }
+.lightMode .navItem { background-color: #e0e7f1; color: black; }
+
+.navItem:hover, .themeToggle:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+/* ===== Карточки ===== */
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.darkMode .card { background: #4a4949; color: white; }
+.lightMode .card { background: #c6d4d9; color: black; }
+
+/* ===== Кнопки ===== */
+.themeToggle, .logoutButton {
+  margin-top: auto;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.app-container {
+  display: flex;
+  height: calc(100vh - 100px);
+  margin-top: 100px;
+}

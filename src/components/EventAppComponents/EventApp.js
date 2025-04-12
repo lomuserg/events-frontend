@@ -1,57 +1,47 @@
 import { useState } from "react";
-import { Calendar, Bell, Megaphone, Sun, Moon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { setAuthHeader } from "../helpers/axios_helper";
 
-import './EventApp.css';
+import { Routes, Route } from 'react-router-dom';
+import Events from '../EventAppComponents/SidebarMenus/Events'; 
+import Calendar from '../EventAppComponents/SidebarMenus/Calendar'; 
+import Notifications from "./SidebarMenus/Notifications";
+import CreateEvent from "./SidebarMenus/CreateEvent";
+import WelcomeEvents from "./WelcomeEvents"; 
+import Sidebar from "./SidebarEvents";
+import styles from "./EventApp.module.css";
 
 export default function EventApp() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const handleLogout = () => {
+    setAuthHeader(null);
+    localStorage.removeItem("auth_token");
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
-    <div className={`app-container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
-      {/* Sidebar */}
-      <aside className={`sidebar ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+    <div className={`${styles.appContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
+      <Sidebar 
+        isDarkMode={isDarkMode} 
+        toggleTheme={toggleTheme} 
+        handleLogout={handleLogout} 
+      />
 
-        <h1 className="title">
-          <img src={`${process.env.PUBLIC_URL}/EVENTS_LOGO3.png`} alt="Главная" className="iconMenu" />
-          Events
-        </h1>
-
-        <nav className="nav">
-          <button className={`nav-item ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
-            <Megaphone size={20} />  Мероприятия
-          </button>
-
-          <button className={`nav-item ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
-            <Calendar size={20} />  Календарь
-          </button>
-
-          <button className={`nav-item ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
-            <Bell size={20} />  Уведомления
-          </button>
-        </nav>
-
-        <button className={`nav-item theme-toggle ${isDarkMode ? 'dark-mode' : 'light-mode'}`} onClick={toggleTheme}>
-          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          {isDarkMode ? "Светлая тема" : "Тёмная тема"}
-        </button>
-
-      </aside>
-
-      {/* Main Content */}
-      <main className="main-content">
-        <h2 className="main-title">Главная</h2>
-        <div className={`card-container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
-          <div className={`card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>Мероприятие 1</div>
-          <div className={`card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>Мероприятие 2</div>
-          <div className={`card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>Мероприятие 3</div>
-          <div className={`card ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>Мероприятие 4</div>
-        </div>
-      </main>
-
-    </div>
+        <Routes>
+        <Route path="/" element={<WelcomeEvents />} />
+          <Route path="/events" element={<Events isDarkMode={isDarkMode} />} />
+          <Route path="/calendar" element={<Calendar isDarkMode={isDarkMode} />} />
+          <Route path="/notifications" element={<Notifications isDarkMode={isDarkMode} />} />
+          <Route path="/create-event" element={<CreateEvent isDarkMode={isDarkMode} />} />
+        </Routes>
+      </div>
+     
   );
 }
