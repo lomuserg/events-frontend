@@ -1,0 +1,76 @@
+/* CreateEvent.module.css */
+.formWrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .createEventForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .input, .textarea, select {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input:focus, .textarea:focus, select:focus {
+    border-color: #007bff;
+  }
+  
+  .textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .submitButton {
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submitButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .darkMode {
+    background-color: #2b2f3a;
+    color: white;
+  }
+  
+  .darkMode .input, .darkMode .textarea, .darkMode select {
+    background-color: #3a3f4b;
+    color: white;
+    border-color: #555;
+  }
+  
+  .lightMode {
+    background-color: #f0f4fa;
+    color: black;
+  }
+  

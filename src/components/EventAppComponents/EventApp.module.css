@@ -37,10 +37,17 @@
 /* ===== Основной контент ===== */
 .mainContent {
   flex: 1;
-  margin-left: 250px;
-  padding: 80px 20px 20px;
+  margin-left: 150px; /* отступ под sidebar */
+  padding: 70px 20px 20px; /* 100px сверху, если есть фиксированный header */
   overflow-y: auto;
+  box-sizing: border-box;
 }
+
+.formWrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 
 .mainTitle {
   font-size: 24px;
