@@ -35,7 +35,7 @@ export default function EventApp() {
       />
 
         <Routes>
-        <Route path="/" element={<WelcomeEvents />} />
+          <Route path="/*" element={<WelcomeEvents />} />
           <Route path="/events" element={<Events isDarkMode={isDarkMode} />} />
           <Route path="/calendar" element={<Calendar isDarkMode={isDarkMode} />} />
           <Route path="/notifications" element={<Notifications isDarkMode={isDarkMode} />} />
