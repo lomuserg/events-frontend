@@ -1,6 +1,6 @@
 .appContainer {
   display: flex;
-  min-height: 100vh;
+  min-height: 97vh;
   padding-top: 60px;
 }
 
@@ -35,8 +35,8 @@
 
 .mainContent {
   flex: 1;
-  margin-left: 150px; /* отступ под sidebar */
-  padding: 70px 20px 20px; /* 100px сверху, если есть фиксированный header */
+  margin-left: 150px;
+  padding: 15px 20px 20px;
   overflow-y: auto;
   box-sizing: border-box;
 }

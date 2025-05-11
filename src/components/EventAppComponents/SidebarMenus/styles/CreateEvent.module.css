@@ -1,5 +1,5 @@
 .createEventFormWrapper {
-  padding: 40px;
+  padding: 20px;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
@@ -22,7 +22,7 @@
 
 .input,
 .textarea,
-select {
+.select {
   font-size: 18px;
   padding: 14px 16px;
   border-radius: 12px;
@@ -35,7 +35,7 @@ select {
 
 .input:focus,
 .textarea:focus,
-select:focus {
+.select:focus {
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
@@ -62,12 +62,33 @@ select:focus {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
-  box-shadow: 0 0 0px 1000px transparent inset !important;
-  -webkit-text-fill-color: inherit !important;
-  transition: background-color 5000s ease-in-out 0s;
+.darkMode .input,
+.darkMode .textarea,
+.darkMode .select {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.darkMode .submitButton {
+  background-color: #4d69b0;
+  color: white;
+}
+
+.darkMode .submitButton:hover {
+  background-color: #3a5490;
+}
+
+.location-input {
+  color: white !important;
+}
+
+.select option {
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.select option:hover {
+  background-color: #34495e;
 }

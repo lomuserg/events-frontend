@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
 import appStyles from '../EventApp.module.css';
 import formStyles from '../SidebarMenus/styles/CreateEvent.module.css';
 
@@ -8,7 +9,7 @@ export default function CreateEvent({ isDarkMode }) {
   const [description, setDescription] = useState('');
   const [eventDateTime, setEventDateTime] = useState('');
   const [location, setLocation] = useState('');
-  const [eventCategory, setEventCategory] = useState('TECH');
+  const [eventCategory, setEventCategory] = useState('CONFERENCE');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -32,7 +33,7 @@ export default function CreateEvent({ isDarkMode }) {
 
     try {
       const response = await axios.post(
-        'http://localhost:8080/main/events',
+        '/main/events',
         eventDto,
         {
           headers: {
@@ -48,9 +49,9 @@ export default function CreateEvent({ isDarkMode }) {
     } catch (error) {
       console.error("Ошибка создания мероприятия:", error);
       if (error.response) {
-        alert(`Ошибка: ${error.response.data}`);
+        alert(`Ошибка: ${error.response.data.message || "Не удалось создать мероприятие"}`);
       } else {
-        alert("Не удалось создать мероприятие. Проверьте подключение к серверу.");
+        alert("Не удалось отправить запрос. Проверьте подключение.");
       }
     } finally {
       setLoading(false);
@@ -70,7 +71,6 @@ export default function CreateEvent({ isDarkMode }) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              autoComplete="off"
               className={formStyles.input}
               placeholder="Введите название"
               required
@@ -108,7 +108,7 @@ export default function CreateEvent({ isDarkMode }) {
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className={formStyles.input}
+              className={`${formStyles.input} ${formStyles.locationInput}`}
               placeholder="Введите место"
               required
             />
@@ -120,7 +120,7 @@ export default function CreateEvent({ isDarkMode }) {
               id="eventCategory"
               value={eventCategory}
               onChange={(e) => setEventCategory(e.target.value)}
-              className={formStyles.input}
+              className={`${formStyles.select} ${formStyles.input}`}
               required
             >
               <option value="">Выберите категорию</option>
