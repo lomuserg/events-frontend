@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Pen } from 'lucide-react';
 import styles from '../SidebarMenus/styles/Events.module.css';
-import appStyles from '../EventApp.module.css'; // импортируем общие стили
+import appStyles from '../EventApp.module.css';
 
 export default function Events({ isDarkMode }) {
   return (
@@ -20,7 +20,10 @@ export default function Events({ isDarkMode }) {
           </div>
 
           <div className={styles.footerCardWrapper}>
-            <div className={styles.card}>
+            <div 
+              className={`${styles.card} 
+                ${isDarkMode ? styles.darkModeCard : styles.lightModeCard}`}
+            >
               Ближайшее мероприятие
             </div>
           </div>

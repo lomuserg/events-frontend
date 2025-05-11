@@ -1,6 +1,6 @@
 .appContainer {
   display: flex;
-  min-height: 97vh;
+  min-height: 98vh;
   padding-top: 60px;
 }
 
@@ -36,7 +36,7 @@
 .mainContent {
   flex: 1;
   margin-left: 150px;
-  padding: 15px 20px 20px;
+  padding: 20px 20px 20px;
   overflow-y: auto;
   box-sizing: border-box;
 }
@@ -72,7 +72,7 @@
 .lightMode .sidebar { background-color: #dfe8f1; }
 
 .darkMode { background: #222735; color: white; }
-.lightMode { background: #92b5d9; color: black; }
+.lightMode { background: #c1defd; color: black; }
 
 .nav {
   display: flex;
@@ -111,7 +111,7 @@
 }
 
 .darkMode .card { background: #4a4949; color: white; }
-.lightMode .card { background: #c6d4d9; color: black; }
+.lightMode .card { background: #cdebf6; color: black; }
 
 .themeToggle, .logoutButton {
   margin-top: auto;
