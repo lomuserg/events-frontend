@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import baseStyles  from '../EventApp.module.css';
-import formStyles  from '../SidebarMenus/styles/CreateEvent.module.css'
+import appStyles from '../EventApp.module.css';
+import formStyles from '../SidebarMenus/styles/CreateEvent.module.css';
 
 export default function CreateEvent({ isDarkMode }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [eventDateTime, setEventDateTime] = useState('');
   const [location, setLocation] = useState('');
-  const [eventCategory, setEventCategory] = useState('TECH'); // Пример категории
+  const [eventCategory, setEventCategory] = useState('TECH');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const token = localStorage.getItem("auth_token");
     if (!token) {
       alert("Вы не авторизованы");
+      setLoading(false);
       return;
     }
 
@@ -46,79 +49,98 @@ export default function CreateEvent({ isDarkMode }) {
       console.error("Ошибка создания мероприятия:", error);
       if (error.response) {
         alert(`Ошибка: ${error.response.data}`);
+      } else {
+        alert("Не удалось создать мероприятие. Проверьте подключение к серверу.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className={styles.mainContent}>
-      <h2 className={styles.mainTitle}>Создать мероприятие</h2>
-      <div className={styles.formWrapper}>
-        <form className={styles.createEventForm} onSubmit={handleSubmit}>
-          <div className={styles.formGroup}>
-            <label htmlFor="eventName">Название мероприятия:</label>
+    <div className={appStyles.mainContent}>
+      <h2 className={appStyles.mainTitle}>Создать мероприятие</h2>
+
+      <div className={`${formStyles.createEventFormWrapper} ${isDarkMode ? appStyles.darkMode : appStyles.lightMode}`}>
+        <form onSubmit={handleSubmit}>
+          <div className={formStyles.formGroup}>
+            <label htmlFor="title">Название мероприятия:</label>
             <input
-              id="eventName"
+              id="title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className={`${styles.input} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+              autoComplete="off"
+              className={formStyles.input}
               placeholder="Введите название"
+              required
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="eventDate">Дата и время:</label>
+          <div className={formStyles.formGroup}>
+            <label htmlFor="description">Описание:</label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className={formStyles.textarea}
+              placeholder="Введите описание мероприятия"
+              required
+            />
+          </div>
+
+          <div className={formStyles.formGroup}>
+            <label htmlFor="eventDateTime">Дата и время:</label>
             <input
-              id="eventDate"
+              id="eventDateTime"
               type="datetime-local"
               value={eventDateTime}
               onChange={(e) => setEventDateTime(e.target.value)}
-              className={`${styles.input} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+              className={formStyles.input}
+              required
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="eventDescription">Описание:</label>
-            <textarea
-              id="eventDescription"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className={`${styles.textarea} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
-              placeholder="Введите описание мероприятия"
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="eventLocation">Локация:</label>
+          <div className={formStyles.formGroup}>
+            <label htmlFor="location">Место проведения:</label>
             <input
-              id="eventLocation"
+              id="location"
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className={`${styles.input} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
-              placeholder="Где будет проходить?"
+              className={formStyles.input}
+              placeholder="Введите место"
+              required
             />
           </div>
 
-          <div className={styles.formGroup}>
+          <div className={formStyles.formGroup}>
             <label htmlFor="eventCategory">Категория:</label>
             <select
               id="eventCategory"
               value={eventCategory}
               onChange={(e) => setEventCategory(e.target.value)}
-              className={`${styles.input} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+              className={formStyles.input}
+              required
             >
-              <option value="TECH">TECH</option>
-              <option value="SPORT">SPORT</option>
-              <option value="ART">ART</option>
-              <option value="MUSIC">MUSIC</option>
+              <option value="">Выберите категорию</option>
+              <option value="CONFERENCE">Конференция</option>
+              <option value="WORKSHOP">Мастер-класс</option>
+              <option value="MEETUP">Встреча</option>
+              <option value="SEMINAR">Семинар</option>
+              <option value="WEBINAR">Вебинар</option>
+              <option value="HACKATHON">Хакатон</option>
+              <option value="TRAINING">Обучение</option>
             </select>
           </div>
 
-          <div className={styles.formGroup}>
-            <button type="submit" className={`${styles.submitButton} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
-              Создать
+          <div className={formStyles.formGroup}>
+            <button
+              type="submit"
+              className={formStyles.submitButton}
+              disabled={loading}
+            >
+              {loading ? "Создание..." : "Создать"}
             </button>
           </div>
         </form>
