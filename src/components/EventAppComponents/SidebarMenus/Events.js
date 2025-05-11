@@ -1,28 +1,31 @@
-// Events.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../EventApp.module.css';
+import { Pen } from 'lucide-react';
+import styles from '../SidebarMenus/styles/Events.module.css';
+import appStyles from '../EventApp.module.css'; // импортируем общие стили
 
 export default function Events({ isDarkMode }) {
   return (
-    <div className={styles.mainContent}>
-      <h2 className={styles.mainTitle}>Мероприятия</h2>
-      <div className={`${styles.cardContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
+    <div className={appStyles.mainContent}>
+      <h2 className={appStyles.mainTitle}>Мероприятия</h2>
 
-      <div className={styles.createEventButton}>
-        <Link to="/main/create-event">
-          <button className={`${styles.navItem} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
-            Создать мероприятие
-          </button>
-        </Link>
+      <div className={`${styles.createEventFormWrapper} ${isDarkMode ? appStyles.darkMode : appStyles.lightMode}`}>
+        <div className={styles.centeredBlockWrapper}>
+          <div className={styles.createEventButton}>
+            <Link to="/main/create-event">
+              <button className={styles.navItem}>
+                <Pen size={28} /> Создать мероприятие
+              </button>
+            </Link>
+          </div>
 
-      </div>
-        <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
-          Ближайшее мероприятие
+          <div className={styles.footerCardWrapper}>
+            <div className={styles.card}>
+              Ближайшее мероприятие
+            </div>
+          </div>
         </div>
       </div>
-
-     
     </div>
   );
 }

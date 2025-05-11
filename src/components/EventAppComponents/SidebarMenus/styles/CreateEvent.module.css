@@ -1,76 +1,73 @@
-/* CreateEvent.module.css */
-.formWrapper {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .createEventForm {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .formGroup {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  label {
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  
-  .input, .textarea, select {
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  .input:focus, .textarea:focus, select:focus {
-    border-color: #007bff;
-  }
-  
-  .textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .submitButton {
-    padding: 12px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submitButton:hover {
-    background-color: #0056b3;
-  }
-  
-  .darkMode {
-    background-color: #2b2f3a;
-    color: white;
-  }
-  
-  .darkMode .input, .darkMode .textarea, .darkMode select {
-    background-color: #3a3f4b;
-    color: white;
-    border-color: #555;
-  }
-  
-  .lightMode {
-    background-color: #f0f4fa;
-    color: black;
-  }
-  
+.createEventFormWrapper {
+  padding: 40px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.input,
+.textarea,
+select {
+  font-size: 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  outline: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input:focus,
+.textarea:focus,
+select:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submitButton {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 14px 20px;
+  background-color: #66b7f1;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.submitButton:hover {
+  background-color: #4d69b0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
