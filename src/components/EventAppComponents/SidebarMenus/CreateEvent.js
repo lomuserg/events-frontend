@@ -33,7 +33,7 @@ export default function CreateEvent({ isDarkMode }) {
 
     try {
       const response = await axios.post(
-        '/main/events',
+        'http://localhost:8080/main/events',
         eventDto,
         {
           headers: {
