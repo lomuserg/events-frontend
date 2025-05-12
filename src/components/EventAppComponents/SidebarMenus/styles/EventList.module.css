@@ -1,0 +1,44 @@
+.eventListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.eventCard {
+  background-color: rgba(220, 100, 254, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.eventCard:hover {
+  transform: translateY(-4px);
+  background-color: rgba(220, 100, 254, 0.15);
+}
+
+.darkMode .eventCard {
+  background-color: rgba(255, 255, 254, 0.05);
+  color: white;
+}
+
+.lightMode .eventCard {
+  background-color: rgba(220, 100, 254, 0.1);
+  color: black;
+}
+
+.eventCard h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.eventCard p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}

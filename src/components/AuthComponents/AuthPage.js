@@ -8,16 +8,9 @@ export default function AuthPage({ onLogin }) {
   const [componentToShow, setComponentToShow] = React.useState("welcome");
   const navigate = useNavigate();
 
-  const login = () => setComponentToShow("login");
-  const logout = () => {
-    setComponentToShow("welcome");
-    setAuthHeader(null);
-    navigate("/");
-  };
-
   const handleLoginSuccess = (token) => {
     setAuthHeader(token);
-    onLogin(); // Вызываем колбэк из App.js для обновления состояния
+    onLogin(); 
     navigate("/events");
   };
 
@@ -30,46 +23,37 @@ export default function AuthPage({ onLogin }) {
       });
       handleLoginSuccess(response.data.token);
     } catch (err) {
-      console.error("Login failed:", err);
+      console.error("Ошибка входа:", err);
+      alert(err.response?.data?.message || "Ошибка входа");
       setComponentToShow("welcome");
-      alert(err.response?.data?.message || "Login failed");
     }
   };
 
-  const onRegister = async (event, firstName, lastName, username, password) => {
-    event.preventDefault();
+  const handleRegister = async (e, firstName, lastName, username, password) => {
+    e.preventDefault();
     try {
       const response = await request.post("/register", {
-        firstName: firstName,
-        lastName: lastName,
+        firstName,
+        lastName,
         login: username,
-        password: password,
+        password,
       });
       handleLoginSuccess(response.data.token);
     } catch (err) {
-      console.error("Registration failed:", err);
+      console.error("Ошибка регистрации:", err);
+      alert(err.response?.data?.message || "Ошибка регистрации");
       setComponentToShow("welcome");
-      alert(err.response?.data?.message || "Registration failed");
     }
   };
 
   return (
-    <div className="app-container">
-      <div className="sidebar">
-        <button className="btn btn-primary" onClick={login}>
-          Login
-        </button>
-        <button className="btn btn-dark" onClick={logout}>
-          Logout
-        </button>
-      </div>
-
-      <div className="content">
-        {componentToShow === "welcome" && <WelcomeContent />}
-        {componentToShow === "login" && (
-          <LoginForm onLogin={handleLogin} onRegister={onRegister} />
-        )}
-      </div>
+    <div className="auth-page">
+      {componentToShow === "welcome" && (
+        <WelcomeContent onLogin={() => setComponentToShow("login")} />
+      )}
+      {componentToShow === "login" && (
+        <LoginForm onLogin={handleLogin} onRegister={handleRegister} />
+      )}
     </div>
   );
 }
