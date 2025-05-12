@@ -30,7 +30,6 @@ export default function Events({ isDarkMode }) {
         setLoading(false);
       } catch (err) {
         console.error("Ошибка загрузки мероприятий:", err);
-        setError("Не удалось загрузить мероприятия.");
         setLoading(false);
       }
     };

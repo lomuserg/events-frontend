@@ -12,13 +12,13 @@ export default class LoginForm extends React.Component {
       login: "",
       password: "",
       redirect: false,
-      error: "" // Добавим состояние для ошибок
+      error: ""
     };
   }
 
   onChangeHandler = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value, error: "" }); // Сбрасываем ошибку при изменении поля
+    this.setState({ [name]: value, error: "" });
   };
 
   onSubmitLogin = async (e) => {
@@ -45,7 +45,7 @@ export default class LoginForm extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      return <Navigate to="/events" />; // Меняем /dashboard на /events
+      return <Navigate to="/events" />;
     }
 
     return (
@@ -54,14 +54,12 @@ export default class LoginForm extends React.Component {
           <div className="col-md-6 col-lg-5">
             <div className="card shadow-lg rounded-3">
               <div className="card-body p-4">
-                {/* Вывод ошибок (добавляем блок) */}
                 {this.state.error && (
                   <div className="alert alert-danger mb-4">
                     {this.state.error}
                   </div>
                 )}
 
-                {/* Переключение вкладок (оставляем без изменений) */}
                 <ul className="nav nav-pills nav-justified mb-4">
                   <li className="nav-item">
                     <button
@@ -85,7 +83,6 @@ export default class LoginForm extends React.Component {
                   </li>
                 </ul>
 
-                {/* Форма входа (без изменений) */}
                 {this.state.active === "login" && (
                   <form onSubmit={this.onSubmitLogin}>
                     <div className="mb-3">
@@ -124,7 +121,6 @@ export default class LoginForm extends React.Component {
                   </form>
                 )}
 
-                {/* Форма регистрации (без изменений) */}
                 {this.state.active === "register" && (
                   <form onSubmit={this.onSubmitRegister}>
                     <div className="mb-3">

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./EventAppComponents/EventApp.module.css"; // Подключаем стили EventApp
+import styles from "./EventAppComponents/EventApp.module.css";
 
 export default function Header({ pageTitle, logoSrc }) {
   return (

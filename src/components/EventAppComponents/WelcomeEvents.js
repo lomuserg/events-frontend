@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./EventApp.module.css"; // Импортируем стили
+import styles from "./EventApp.module.css";
 
 export default function WelcomeEvents() {
   return (

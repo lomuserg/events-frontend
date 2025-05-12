@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 80px); /* Высота без хедера */
+  min-height: calc(100vh - 80px);
   padding: 20px;
   background-color: #f5f9ff;
 }

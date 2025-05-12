@@ -17,18 +17,18 @@ function App() {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
   });
-  const [loading, setLoading] = useState(true); // Для отслеживания состояния загрузки
+  const [loading, setLoading] = useState(true);
 
   const fetchUserData = async () => {
     try {
-      const response = await request.get("/user"); // Запрос к /user
+      const response = await request.get("/user");
       const userData = response.data;
-      setUser(userData); // Обновляем состояние
-      localStorage.setItem("user", JSON.stringify(userData)); // Сохраняем данные в localStorage
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
     } catch (error) {
       console.error("Ошибка загрузки пользователя:", error);
       if (error.response && error.response.data) {
-        alert(error.response.data); // Показать сообщение об ошибке от сервера
+        alert(error.response.data);
       } else {
         alert("Неизвестная ошибка");
       }
@@ -81,16 +81,16 @@ function App() {
     verifyToken();
   }, [verifyToken]);
 
-  // Загружаем данные пользователя после успешной аутентификации
+
   useEffect(() => {
     if (isLoggedIn) {
-      fetchUserData(); // Загружаем данные пользователя
+      fetchUserData();
     }
-    setLoading(false); // После выполнения проверки и загрузки данных убираем загрузку
+    setLoading(false); 
   }, [isLoggedIn]);
 
   if (loading) {
-    return <div>Loading...</div>; // Отображение загрузки до тех пор, пока не закончится проверка аутентификации
+    return <div>Loading...</div>;
   }
 
   return (

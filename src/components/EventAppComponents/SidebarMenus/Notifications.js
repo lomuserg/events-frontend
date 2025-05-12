@@ -1,4 +1,3 @@
-// Notifications.js
 import React from 'react';
 import styles from '../EventApp.module.css';
 
@@ -11,7 +10,6 @@ export default function Notifications({ isDarkMode }) {
         <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Уведомление 2</div>
         <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Уведомление 3</div>
         <div className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>Уведомление 4</div>
-        {/* Добавьте дополнительные уведомления по необходимости */}
       </div>
     </div>
   );
