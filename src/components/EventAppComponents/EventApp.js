@@ -7,6 +7,7 @@ import Events from '../EventAppComponents/SidebarMenus/Events';
 import Calendar from '../EventAppComponents/SidebarMenus/Calendar'; 
 import Notifications from "./SidebarMenus/Notifications";
 import CreateEvent from "./SidebarMenus/CreateEvent";
+import EditEvent from "./SidebarMenus/eventsEdit/EditEvent";
 import WelcomeEvents from "./WelcomeEvents"; 
 import Sidebar from "./SidebarEvents";
 import styles from "./EventApp.module.css";
@@ -41,6 +42,7 @@ export default function EventApp() {
           <Route path="/calendar" element={<Calendar isDarkMode={isDarkMode} />} />
           <Route path="/notifications" element={<Notifications isDarkMode={isDarkMode} />} />
           <Route path="/create-event" element={<CreateEvent isDarkMode={isDarkMode} />} />
+          <Route path="/events/:id/edit" element={<EditEvent isDarkMode={isDarkMode} />} />
         </Routes>
       </div>
     </div>
