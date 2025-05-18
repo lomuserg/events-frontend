@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import { Pen } from 'lucide-react';
 
 import appStyles from "../EventApp.module.css";
 import eventStyles from "../SidebarMenus/styles/EventList.module.css"; 
-import styles from '../SidebarMenus/styles/Events.module.css';
 
 export default function Calendar({ isDarkMode }) {
   const [events, setEvents] = useState([]);
@@ -57,19 +55,39 @@ export default function Calendar({ isDarkMode }) {
           <p>У вас пока нет созданных мероприятий.</p>
         ) : (
           events.map((event, index) => (
-            <div key={index} className={eventStyles.eventCard}>
+            <div key={event.id} className={`${eventStyles.eventCard} ${
+              event.userEventRole === 'ORGANIZER' 
+                ? eventStyles.organizerCard 
+                : eventStyles.participantCard
+              }`}>
               <h3>{event.title}</h3>
-             {(() => {
-                const [year, month, day, hour, minute] = event.eventDateTime;
-                const date = new Date(year, month - 1, day, hour, minute); // Месяцы в JS с 0
-                return <p><strong>Дата:</strong> {date.toLocaleString()}</p>;
-              })()}
+
+              {event.eventDateTime && (
+                (() => {
+                  const [year, month, day, hour, minute] = event.eventDateTime;
+                  const date = new Date(year, month - 1, day, hour, minute);
+                  return <p><strong>Дата:</strong> {date.toLocaleString()}</p>;
+                })()
+              )}
+
               <p><strong>Место:</strong> {event.location}</p>
               <p><strong>Категория:</strong> {event.eventCategory}</p>
               <p><strong>Описание:</strong> {event.description}</p>
-              <Link to={`/main/events/${event.id}/edit`} className={styles.navItem}>
-                <Pen size={20} /> Редактировать
-              </Link>
+
+              <p>
+                Вы:{" "}
+                {event.userEventRole === 'ORGANIZER' 
+                  ? 'Организатор' 
+                  : event.userEventRole === 'PARTICIPANT' 
+                    ? 'Участник' 
+                    : 'Неизвестно'}
+              </p>
+
+              {event.userEventRole === 'ORGANIZER' && (
+                <Link to={`/main/events/${event.id}/edit`} className={eventStyles.editButton}>
+                  Редактировать
+                </Link>
+              )}
             </div>
           ))
         )}
