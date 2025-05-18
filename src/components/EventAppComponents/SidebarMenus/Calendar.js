@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 
 import appStyles from "../EventApp.module.css";
-import eventStyles from "../SidebarMenus/styles/EventList.module.css"; 
+import eventStyles from "../SidebarMenus/styles/EventList.module.css";
 
 export default function Calendar({ isDarkMode }) {
   const [events, setEvents] = useState([]);
@@ -46,6 +46,17 @@ export default function Calendar({ isDarkMode }) {
     return <div>{error}</div>;
   }
 
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    return new Intl.DateTimeFormat('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(date);
+  };
+
   return (
     <div className={appStyles.mainContent}>
       <h2 className={appStyles.mainTitle}>Календарь</h2>
@@ -54,20 +65,21 @@ export default function Calendar({ isDarkMode }) {
         {events.length === 0 ? (
           <p>У вас пока нет созданных мероприятий.</p>
         ) : (
-          events.map((event, index) => (
-            <div key={event.id} className={`${eventStyles.eventCard} ${
-              event.userEventRole === 'ORGANIZER' 
-                ? eventStyles.organizerCard 
-                : eventStyles.participantCard
-              }`}>
+          events.map((event) => (
+            <div
+              key={event.id}
+              className={`${eventStyles.eventCard} ${
+                event.userEventRole === 'ORGANIZER'
+                  ? eventStyles.organizerCard
+                  : eventStyles.participantCard
+              }`}
+            >
               <h3>{event.title}</h3>
 
               {event.eventDateTime && (
-                (() => {
-                  const [year, month, day, hour, minute] = event.eventDateTime;
-                  const date = new Date(year, month - 1, day, hour, minute);
-                  return <p><strong>Дата:</strong> {date.toLocaleString()}</p>;
-                })()
+                <p>
+                  <strong>Дата:</strong> {formatDate(event.eventDateTime)}
+                </p>
               )}
 
               <p><strong>Место:</strong> {event.location}</p>
@@ -76,10 +88,10 @@ export default function Calendar({ isDarkMode }) {
 
               <p>
                 Вы:{" "}
-                {event.userEventRole === 'ORGANIZER' 
-                  ? 'Организатор' 
-                  : event.userEventRole === 'PARTICIPANT' 
-                    ? 'Участник' 
+                {event.userEventRole === 'ORGANIZER'
+                  ? 'Организатор'
+                  : event.userEventRole === 'PARTICIPANT'
+                    ? 'Участник'
                     : 'Неизвестно'}
               </p>
 

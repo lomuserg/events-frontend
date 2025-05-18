@@ -83,3 +83,62 @@
   color: black;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
+.cardFlex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  gap: 16px;
+}
+
+.cardText {
+  flex: 1 1 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cardText h4 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.cardText p {
+  margin: 2px 0;
+  font-size: 16px;
+}
+
+.editButton {
+  flex: 1 1 auto;
+  max-width: 150px;
+  padding: 10px 16px;
+  background-color: #93cef5;
+  color: rgb(0, 0, 0);
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.editButton:hover {
+  background-color: #6c98b6;
+}
+
+@media (max-width: 600px) {
+  .cardFlex {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cardText {
+    width: 100%;
+  }
+
+  .editButton {
+    width: 100%;
+    text-align: center;
+  }
+}

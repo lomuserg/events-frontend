@@ -85,11 +85,11 @@
   justify-content: center;
   padding: 8px 5px;
   background-color: #a85b24; 
-  color: white; 
+  color: rgb(255, 247, 231); 
   border: none;
   border-radius: 50px; 
   cursor: pointer;
-  font-size: 16px; 
+  font-size: 14px; 
   font-weight: 500; 
   transition: background-color 0.3s ease, box-shadow 0.2s ease;
   width: auto; 

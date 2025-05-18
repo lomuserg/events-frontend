@@ -26,7 +26,7 @@ export default function EditEvent({ isDarkMode }) {
           return;
         }
 
-        const response = await axios.get(`http://localhost:8080/main/calendar/events/${id}`, {
+        const response = await axios.get(`http://localhost:8080/main/events/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
