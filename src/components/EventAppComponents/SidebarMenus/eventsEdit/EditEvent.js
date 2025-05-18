@@ -15,6 +15,7 @@ export default function EditEvent({ isDarkMode }) {
   const [location, setLocation] = useState('');
   const [eventCategory, setEventCategory] = useState('CONFERENCE');
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -87,7 +88,7 @@ export default function EditEvent({ isDarkMode }) {
       );
 
       alert("Мероприятие успешно обновлено!");
-      navigate(`/events/${id}`);
+      navigate(`/main/calendar`);
     } catch (error) {
       console.error("Ошибка редактирования мероприятия:", error);
       if (error.response) {
@@ -100,9 +101,34 @@ export default function EditEvent({ isDarkMode }) {
     }
   };
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm("Вы уверены, что хотите удалить это мероприятие?");
+    if (!confirmed) return;
+
+    setDeleting(true);
+    const token = localStorage.getItem("auth_token");
+
+    try {
+      await axios.delete(`http://localhost:8080/main/events/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+
+      alert("Мероприятие удалено");
+      navigate("/main/calendar");
+    } catch (error) {
+      console.error("Ошибка удаления мероприятия:", error);
+      alert("Не удалось удалить мероприятие");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
     <div className={appStyles.mainContent}>
-      <h2 className={appStyles.mainTitle}>Редактировать мероприятие</h2>
+      <h2 className={appStyles.mainTitle}>{title}</h2>
 
       <div className={`${formStyles.createEventFormWrapper} ${isDarkMode ? appStyles.darkMode : appStyles.lightMode}`}>
         <form onSubmit={handleSubmit}>
@@ -186,6 +212,16 @@ export default function EditEvent({ isDarkMode }) {
             </button>
           </div>
         </form>
+
+        <div className={formStyles.formGroup}>
+          <button
+            onClick={handleDelete}
+            className={formStyles.deleteButton}
+            disabled={deleting}
+          >
+            {deleting ? "Удаление..." : "Удалить мероприятие"}
+          </button>
+        </div>
       </div>
     </div>
   );

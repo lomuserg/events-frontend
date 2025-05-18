@@ -50,7 +50,7 @@
   font-weight: 600;
   padding: 14px 20px;
   background-color: #66b7f1;
-  color: #000;
+  color: #ffffff;
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -91,4 +91,35 @@
 
 .select option:hover {
   background-color: #34495e;
+}
+
+.deleteButton {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 14px 20px;
+  background-color: #771b11c5;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background-color: #5f120a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.deleteButton:disabled {
+  background-color: #578083;
+  cursor: not-allowed;
+}
+
+.darkMode .deleteButton {
+  background-color: #42100a;
+  color: white;
+}
+
+.darkMode .deleteButton:hover:not(:disabled) {
+  background-color: #7e2218;
 }
