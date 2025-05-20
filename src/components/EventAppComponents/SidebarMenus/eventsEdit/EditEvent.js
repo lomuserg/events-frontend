@@ -16,44 +16,96 @@ export default function EditEvent({ isDarkMode }) {
   const [eventCategory, setEventCategory] = useState('CONFERENCE');
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [participants, setParticipants] = useState([]);
+  const [participantLogin, setParticipantLogin] = useState('');
+  const [isAdding, setIsAdding] = useState(false);
+  const userDto = JSON.parse(localStorage.getItem("user"));
+  const currentUserLogin = userDto?.login;
 
-  useEffect(() => {
-    const fetchEvent = async () => {
-      try {
-        const token = localStorage.getItem("auth_token");
-        if (!token) {
-          alert("Вы не авторизованы");
-          navigate("/login");
-          return;
-        }
-
-        const response = await axios.get(`http://localhost:8080/main/events/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        });
-
-        const event = response.data;
-
-        setTitle(event.title);
-        setDescription(event.description);
-        setLocation(event.location);
-        setEventCategory(event.eventCategory || 'CONFERENCE');
-
-        const date = new Date(event.eventDateTime);
-        const formattedDate = date.toISOString().slice(0, 16);
-        setEventDateTime(formattedDate);
-
-      } catch (error) {
-        console.error("Ошибка загрузки мероприятия:", error);
-        alert("Не удалось загрузить данные мероприятия");
-        navigate("/events");
+useEffect(() => {
+  const fetchEvent = async () => {
+    try {
+      const token = localStorage.getItem("auth_token");
+      if (!token) {
+        alert("Вы не авторизованы");
+        navigate("/login");
+        return;
       }
-    };
 
-    fetchEvent();
-  }, [id, navigate]);
+      const response = await axios.get(`http://localhost:8080/main/events/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+
+      const event = response.data;
+
+      setTitle(event.title);
+      setDescription(event.description);
+      setLocation(event.location);
+      setEventCategory(event.eventCategory || 'CONFERENCE');
+
+      const date = new Date(event.eventDateTime);
+      const formattedDate = date.toISOString().slice(0, 16);
+      setEventDateTime(formattedDate);
+
+      if (event.participantsLogins) {
+        setParticipants(event.participantsLogins);
+      }
+
+    } catch (error) {
+      console.error("Ошибка загрузки мероприятия:", error);
+      alert("Не удалось загрузить данные мероприятия");
+      navigate("/events");
+    }
+  };
+
+  fetchEvent();
+}, [id, navigate]);
+
+const handleAddParticipant = async () => {
+    const login = participantLogin.trim();
+    if (!login) {
+      alert("Введите логин пользователя");
+      return;
+    }
+
+    if (participants.includes(login)) {
+      alert("Пользователь уже добавлен");
+      return;
+    }
+
+    setIsAdding(true);
+    const token = localStorage.getItem("auth_token");
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/main/events/${id}/participants`,
+        { login },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          withCredentials: true
+        }
+      );
+
+      const addedUserLogin = response.data.login;
+      setParticipants([...participants, addedUserLogin]);
+      setParticipantLogin('');
+    } catch (error) {
+      console.error("Ошибка добавления участника:", error);
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("Не удалось добавить участника");
+      }
+    } finally {
+      setIsAdding(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -200,6 +252,44 @@ export default function EditEvent({ isDarkMode }) {
               <option value="HACKATHON">Хакатон</option>
               <option value="TRAINING">Обучение</option>
             </select>
+          </div>
+
+          <div className={`${formStyles.participantSidebar} ${isDarkMode ? formStyles.darkMode : formStyles.lightMode}`}>
+            <h4>Участники</h4>
+            <div className={formStyles.addParticipant}>
+              <input
+                id="participantLogin"
+                type="text"
+                value={participantLogin}
+                onChange={(e) => setParticipantLogin(e.target.value)}
+                className={formStyles.input}
+                placeholder="Логин участника"
+              />
+              <button
+                onClick={handleAddParticipant}
+                disabled={isAdding}
+                className={formStyles.addButton}
+              >
+                {isAdding ? "Добавление..." : "+"}
+              </button>
+            </div>
+
+            {participants.length > 0 && (
+              <ul className={formStyles.participantList}>
+                {participants.map((login, index) => (
+                  <li key={index} className={formStyles.participantItem}>
+                    {login}
+                    {login === currentUserLogin && (
+                      <span style={{ marginLeft: '8px', color: '#facc15' }}>👑</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {participants.length === 0 && (
+              <p className={formStyles.noParticipants}>Нет участников</p>
+            )}
           </div>
 
           <div className={formStyles.formGroup}>

@@ -10,52 +10,56 @@ export default function Calendar({ isDarkMode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const token = localStorage.getItem("auth_token");
-        if (!token) {
-          setError("Вы не авторизованы");
-          setLoading(false);
-          return;
-        }
-
-        const response = await axios.get("http://localhost:8080/main/events", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-        });
-
-        setEvents(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Ошибка загрузки мероприятий:", err);
-        setLoading(false);
-      }
-    };
-
-    fetchEvents();
-  }, []);
-
-  if (loading) {
-    return <div>Загрузка...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  const formatDate = (isoString) => {
-    const date = new Date(isoString);
-    return new Intl.DateTimeFormat('ru-RU', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(date);
+  const truncateText = (text, maxLength = 15) => {
+    return text && text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
   };
+
+    useEffect(() => {
+      const fetchEvents = async () => {
+        try {
+          const token = localStorage.getItem("auth_token");
+          if (!token) {
+            setError("Вы не авторизованы");
+            setLoading(false);
+            return;
+          }
+
+          const response = await axios.get("http://localhost:8080/main/events", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          });
+
+          setEvents(response.data);
+          setLoading(false);
+        } catch (err) {
+          console.error("Ошибка загрузки мероприятий:", err);
+          setLoading(false);
+        }
+      };
+
+      fetchEvents();
+    }, []);
+
+    if (loading) {
+      return <div>Загрузка...</div>;
+    }
+
+    if (error) {
+      return <div>{error}</div>;
+    }
+
+    const formatDate = (isoString) => {
+      const date = new Date(isoString);
+      return new Intl.DateTimeFormat('ru-RU', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }).format(date);
+    };
 
   return (
     <div className={appStyles.mainContent}>
@@ -66,7 +70,7 @@ export default function Calendar({ isDarkMode }) {
           <p>У вас пока нет созданных мероприятий.</p>
         ) : (
           events.map((event) => (
-            <div
+           <div
               key={event.id}
               className={`${eventStyles.eventCard} ${
                 event.userEventRole === 'ORGANIZER'
@@ -74,7 +78,7 @@ export default function Calendar({ isDarkMode }) {
                   : eventStyles.participantCard
               }`}
             >
-              <h3>{event.title}</h3>
+              <h3>{truncateText(event.title, 20)}</h3>
 
               {event.eventDateTime && (
                 <p>
@@ -82,9 +86,9 @@ export default function Calendar({ isDarkMode }) {
                 </p>
               )}
 
-              <p><strong>Место:</strong> {event.location}</p>
-              <p><strong>Категория:</strong> {event.eventCategory}</p>
-              <p><strong>Описание:</strong> {event.description}</p>
+              <p><strong>Место:</strong> {truncateText(event.location, 15)}</p>
+              <p><strong>Категория:</strong> {truncateText(event.eventCategory, 15)}</p>
+              <p><strong>Описание:</strong> {truncateText(event.description, 30)}</p>
 
               <p>
                 Вы:{" "}
