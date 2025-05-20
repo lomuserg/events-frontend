@@ -6,7 +6,7 @@ import appStyles from '../../EventApp.module.css';
 import formStyles from '../styles/CreateEvent.module.css';
 
 export default function EditEvent({ isDarkMode }) {
-  const { id } = useParams();
+  const { id: eventId } = useParams();
   const navigate = useNavigate();
 
   const [title, setTitle] = useState('');
@@ -32,7 +32,7 @@ useEffect(() => {
         return;
       }
 
-      const response = await axios.get(`http://localhost:8080/main/events/${id}`, {
+      const response = await axios.get(`http://localhost:8080/main/events/${eventId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -62,7 +62,7 @@ useEffect(() => {
   };
 
   fetchEvent();
-}, [id, navigate]);
+}, [eventId, navigate]);
 
 const handleAddParticipant = async () => {
     const login = participantLogin.trim();
@@ -81,8 +81,11 @@ const handleAddParticipant = async () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8080/main/events/${id}/participants`,
-        { login },
+        `http://localhost:8080/main/participants`,
+        { login,
+          eventId,
+          eventDateTime
+         },
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -128,7 +131,7 @@ const handleAddParticipant = async () => {
 
     try {
       await axios.put(
-        `http://localhost:8080/main/events/${id}`,
+        `http://localhost:8080/main/events/${eventId}`,
         eventDto,
         {
           headers: {
@@ -140,7 +143,7 @@ const handleAddParticipant = async () => {
       );
 
       alert("Мероприятие успешно обновлено!");
-      navigate(`/main/calendar`);
+      navigate(`/main/events/${eventId}/edit`);
     } catch (error) {
       console.error("Ошибка редактирования мероприятия:", error);
       if (error.response) {
@@ -161,7 +164,7 @@ const handleAddParticipant = async () => {
     const token = localStorage.getItem("auth_token");
 
     try {
-      await axios.delete(`http://localhost:8080/main/events/${id}`, {
+      await axios.delete(`http://localhost:8080/main/events/${eventId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
