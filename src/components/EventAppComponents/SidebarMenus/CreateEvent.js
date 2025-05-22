@@ -3,14 +3,15 @@ import axios from 'axios';
 
 import appStyles from '../EventApp.module.css';
 import formStyles from '../SidebarMenus/styles/CreateEvent.module.css';
+import MapInput from '../Maps/MapInput';
 
 export default function CreateEvent({ isDarkMode }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [eventDateTime, setEventDateTime] = useState('');
-  const [location, setLocation] = useState('');
-  const [eventCategory, setEventCategory] = useState('CONFERENCE');
+  const [coordinates, setCoordinates] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [eventCategory, setEventCategory] = useState('CONFERENCE');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +28,7 @@ export default function CreateEvent({ isDarkMode }) {
       title,
       description,
       eventDateTime,
-      location,
+      location: coordinates || "55.753215, 37.622415",
       eventCategory
     };
 
@@ -101,18 +102,20 @@ export default function CreateEvent({ isDarkMode }) {
             />
           </div>
 
-          <div className={formStyles.formGroup}>
-            <label htmlFor="location">Место проведения:</label>
-            <input
-              id="location"
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className={`${formStyles.input} ${formStyles.locationInput}`}
-              placeholder="Введите место"
-              required
-            />
-          </div>
+         <MapInput 
+            onLocationChange={setCoordinates}
+            initialCoords={coordinates ? coordinates.split(',').map(Number) : undefined}
+          />
+
+          {coordinates && (
+            <div className={formStyles.formGroup}>
+              <input
+                value={coordinates}
+                readOnly
+                className={formStyles.input}
+              />
+            </div>
+          )}
 
           <div className={formStyles.formGroup}>
             <label htmlFor="eventCategory">Категория:</label>
