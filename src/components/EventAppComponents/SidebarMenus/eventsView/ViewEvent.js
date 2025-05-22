@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import appStyles from '../../EventApp.module.css';
 import formStyles from '../styles/CreateEvent.module.css';
 
@@ -13,10 +13,20 @@ export default function ViewEvent({ isDarkMode }) {
   const [eventCategory, setEventCategory] = useState('');
   const [participants, setParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [participantLogin, setParticipantLogin] = useState('');
-  const [isAdding, setIsAdding] = useState(false);
+  const [userEventRole, setUserEventRole] = useState(null);
+
   const userDto = JSON.parse(localStorage.getItem("user"));
   const currentUserLogin = userDto?.login;
+
+  const EVENT_CATEGORIES = {
+    CONFERENCE: "Конференция",
+    WORKSHOP: "Мастер-класс",
+    MEETUP: "Встреча",
+    SEMINAR: "Семинар",
+    WEBINAR: "Вебинар",
+    HACKATHON: "Хакатон",
+    TRAINING: "Обучение"
+  };
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -40,6 +50,7 @@ export default function ViewEvent({ isDarkMode }) {
         setLocation(event.location);
         setEventCategory(event.eventCategory || '');
         setEventDateTime(event.eventDateTime);
+        setUserEventRole(event.userEventRole);
 
         if (event.participantsLogins) {
           setParticipants(event.participantsLogins);
@@ -54,50 +65,6 @@ export default function ViewEvent({ isDarkMode }) {
 
     fetchEvent();
   }, [eventId]);
-
-  const handleAddParticipant = async () => {
-    const login = participantLogin.trim();
-    if (!login) {
-      alert("Введите логин пользователя");
-      return;
-    }
-
-    if (participants.includes(login)) {
-      alert("Пользователь уже добавлен");
-      return;
-    }
-
-    setIsAdding(true);
-    const token = localStorage.getItem("auth_token");
-
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/main/participants`,
-        { login, eventId },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          withCredentials: true
-        }
-      );
-
-      const addedUserLogin = response.data.login;
-      setParticipants([...participants, addedUserLogin]);
-      setParticipantLogin('');
-      alert(`Пользователь "${addedUserLogin}" успешно добавлен`);
-    } catch (error) {
-      console.error("Ошибка добавления участника:", error);
-      if (error.response?.data?.message) {
-        alert(error.response.data.message);
-      } else {
-        alert("Не удалось добавить участника");
-      }
-    } finally {
-      setIsAdding(false);
-    }
-  };
 
   if (loading) {
     return <p>Загрузка...</p>;
@@ -124,31 +91,17 @@ export default function ViewEvent({ isDarkMode }) {
           <p>{location}</p>
         </div>
         <div className={formStyles.formGroup}>
-          <label>Категория:</label>
-          <p>{eventCategory}</p>
+          <p>
+            <strong>Категория:</strong>{" "}
+            {eventCategory 
+              ? EVENT_CATEGORIES[eventCategory] || eventCategory 
+              : "Не указано"}
+          </p>
         </div>
 
         <div className={`${formStyles.participantSidebar} ${isDarkMode ? formStyles.darkMode : formStyles.lightMode}`}>
           <h4>Участники</h4>
-          <div className={formStyles.addParticipant}>
-            <input
-              id="participantLogin"
-              type="text"
-              value={participantLogin}
-              onChange={(e) => setParticipantLogin(e.target.value)}
-              className={formStyles.input}
-              placeholder="Логин участника"
-            />
-            <button
-              onClick={handleAddParticipant}
-              disabled={isAdding}
-              className={formStyles.addButton}
-            >
-              {isAdding ? "Добавление..." : "+"}
-            </button>
-          </div>
-
-          {participants.length > 0 && (
+          {participants.length > 0 ? (
             <ul className={formStyles.participantList}>
               {participants.map((login, index) => (
                 <li key={index} className={formStyles.participantItem}>
@@ -159,12 +112,17 @@ export default function ViewEvent({ isDarkMode }) {
                 </li>
               ))}
             </ul>
-          )}
-
-          {participants.length === 0 && (
+          ) : (
             <p className={formStyles.noParticipants}>Нет участников</p>
           )}
         </div>
+        {userEventRole === 'ORGANIZER' && (
+          <div className={formStyles.formGroup}>
+            <Link to={`/main/events/${eventId}/edit`} className={formStyles.editButton}>
+              Редактировать
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -239,3 +239,34 @@
 .removeButton:hover {
   color: #dc2626;
 }
+
+.editButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #a85b24;
+  color: #fffaf1;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+.editButton:hover {
+  background-color: #8d4e21;
+}
+
+.darkMode .editButton {
+  background-color: #fb923c;
+  color: white;
+}
+
+.darkMode .editButton:hover {
+  background-color: #f97316;
+}

@@ -80,20 +80,33 @@
   background-color: #0ea5e9;
 }
 
+.eventCardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
+.editButtonWrapper {
+  display: inline-block;
+  margin-top: 12px;
+}
+
 .editButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 5px;
-  background-color: #a85b24; 
-  color: rgb(255, 247, 231); 
+  padding: 8px 16px;
+  background-color: #a85b24;
+  color: #fffaf1;
   border: none;
-  border-radius: 50px; 
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px; 
-  font-weight: 500; 
+  font-size: 14px;
+  font-weight: 500;
   transition: background-color 0.3s ease, box-shadow 0.2s ease;
-  width: auto; 
+  width: auto;
+  text-align: center;
 }
 
 .editButton svg {
@@ -108,23 +121,10 @@
 }
 
 .darkMode .editButton {
-  background-color: #fb923c; 
-  color: white; 
+  background-color: #fb923c;
+  color: white;
 }
 
 .darkMode .editButton:hover {
   background-color: #f97316;
-}
-
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
-}
-
-.card p {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
