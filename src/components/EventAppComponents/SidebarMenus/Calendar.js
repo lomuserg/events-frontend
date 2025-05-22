@@ -70,41 +70,42 @@ export default function Calendar({ isDarkMode }) {
           <p>У вас пока нет созданных мероприятий.</p>
         ) : (
           events.map((event) => (
-           <div
-              key={event.id}
-              className={`${eventStyles.eventCard} ${
-                event.userEventRole === 'ORGANIZER'
-                  ? eventStyles.organizerCard
-                  : eventStyles.participantCard
-              }`}
-            >
-              <h3>{truncateText(event.title, 20)}</h3>
+        <div
+          key={event.id}
+          className={`${eventStyles.eventCard} ${
+            event.userEventRole === 'ORGANIZER'
+              ? eventStyles.organizerCard
+              : eventStyles.participantCard
+          }`}
+        >
+          <div className={eventStyles.cardContent}>
+            <h3>{truncateText(event.title, 30)}</h3>
 
-              {event.eventDateTime && (
-                <p>
-                  <strong>Дата:</strong> {formatDate(event.eventDateTime)}
-                </p>
-              )}
-
-              <p><strong>Место:</strong> {truncateText(event.location, 15)}</p>
-              <p><strong>Категория:</strong> {truncateText(event.eventCategory, 15)}</p>
-              <p><strong>Описание:</strong> {truncateText(event.description, 30)}</p>
-
+            {event.eventDateTime && (
               <p>
-                Вы:{" "}
-                {event.userEventRole === 'ORGANIZER'
-                  ? 'Организатор'
-                  : event.userEventRole === 'PARTICIPANT'
-                    ? 'Участник'
-                    : 'Неизвестно'}
+                <strong>Дата:</strong> {formatDate(event.eventDateTime)}
               </p>
+            )}
 
-              {event.userEventRole === 'ORGANIZER' && (
-                <Link to={`/main/events/${event.id}/edit`} className={eventStyles.editButton}>
-                  Редактировать
-                </Link>
-              )}
-            </div>
+            <p><strong>Место:</strong> {truncateText(event.location, 20)}</p>
+            <p><strong>Описание:</strong> {truncateText(event.description, 15)}</p>
+            <p><strong>Категория:</strong> {truncateText(event.eventCategory, 15)}</p>
+            <p>
+              Вы:{" "}
+              {event.userEventRole === 'ORGANIZER'
+                ? 'Организатор'
+                : event.userEventRole === 'PARTICIPANT'
+                  ? 'Участник'
+                  : 'Неизвестно'}
+            </p>
+          </div>
+
+          {event.userEventRole === 'ORGANIZER' && (
+            <Link to={`/main/events/${event.id}/edit`} className={eventStyles.editButton}>
+              Редактировать
+            </Link>
+          )}
+        </div>
           ))
         )}
       </div>

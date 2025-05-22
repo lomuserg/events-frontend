@@ -45,10 +45,7 @@ useEffect(() => {
       setDescription(event.description);
       setLocation(event.location);
       setEventCategory(event.eventCategory || 'CONFERENCE');
-
-      const date = new Date(event.eventDateTime);
-      const formattedDate = date.toISOString().slice(0, 16);
-      setEventDateTime(formattedDate);
+      setEventDateTime(event.eventDateTime);
 
       if (event.participantsLogins) {
         setParticipants(event.participantsLogins);
@@ -98,6 +95,7 @@ const handleAddParticipant = async () => {
       const addedUserLogin = response.data.login;
       setParticipants([...participants, addedUserLogin]);
       setParticipantLogin('');
+      alert(`Пользователь "${addedUserLogin}" успешно добавлен`);
     } catch (error) {
       console.error("Ошибка добавления участника:", error);
       if (error.response?.data?.message) {
@@ -180,6 +178,31 @@ const handleAddParticipant = async () => {
       setDeleting(false);
     }
   };
+
+  const handleRemoveParticipant = async (login) => {
+  const confirmed = window.confirm(`Вы уверены, что хотите удалить ${login} из мероприятия?`);
+  if (!confirmed) return;
+
+  const token = localStorage.getItem("auth_token");
+  try {
+    await axios.delete(
+      `http://localhost:8080/main/participants/${eventId}/${login}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      }
+    );
+
+    setParticipants(participants.filter(p => p !== login));
+    alert(`Пользователь "${login}" успешно удален`);
+  } catch (error) {
+    console.error("Ошибка при удалении участника:", error);
+    alert("Не удалось удалить участника");
+  }
+};
 
   return (
     <div className={appStyles.mainContent}>
@@ -282,8 +305,17 @@ const handleAddParticipant = async () => {
                 {participants.map((login, index) => (
                   <li key={index} className={formStyles.participantItem}>
                     {login}
-                    {login === currentUserLogin && (
+                    {login === currentUserLogin ? (
                       <span style={{ marginLeft: '8px', color: '#facc15' }}>👑</span>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveParticipant(login)}
+                        className={formStyles.removeButton}
+                        disabled={isAdding}
+                      >
+                        ✕
+                      </button>
                     )}
                   </li>
                 ))}

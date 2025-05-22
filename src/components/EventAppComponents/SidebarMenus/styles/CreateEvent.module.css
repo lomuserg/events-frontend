@@ -192,7 +192,7 @@
 
 .participantSidebar {
   flex: 1;
-  max-width: 300px;
+  max-width: 550px;
   padding: 20px;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -210,4 +210,32 @@
 
 .darkMode .participantItem {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.eventCard {
+  background-color: rgba(233, 186, 247, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 300px; 
+}
+
+.removeButton {
+  margin-left: 12px;
+  background-color: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.removeButton:hover {
+  color: #dc2626;
 }
