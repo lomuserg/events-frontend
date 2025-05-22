@@ -9,7 +9,7 @@ export default function EventHeader({ user }) {
           alt="Главная"
           className={styles.iconMenu}
         />
-        Events {user && `| ${user.firstName}`}
+        Events {user && `| ${user.login}`}
       </h1>
     </header>
   );

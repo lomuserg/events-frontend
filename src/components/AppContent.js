@@ -20,7 +20,7 @@ export default class AppContent extends React.Component {
     logout = () => {
         this.setState({ componentToShow: "welcome" });
         setAuthHeader(null);
-        this.props.setIsLoggedIn(false); // Сбрасываем авторизацию в App.js
+        this.props.setIsLoggedIn(false); 
     };
 
     onLogin = (e, username, password) => {
@@ -28,7 +28,7 @@ export default class AppContent extends React.Component {
         request("POST", "/login", { login: username, password: password })
             .then((response) => {
                 setAuthHeader(response.data.token);
-                this.props.setIsLoggedIn(true); // Теперь App.js переключится на EventHeader + EventApp
+                this.props.setIsLoggedIn(true); 
             })
             .catch((error) => {
                 setAuthHeader(null);
@@ -46,7 +46,7 @@ export default class AppContent extends React.Component {
         })
             .then((response) => {
                 setAuthHeader(response.data.token);
-                this.props.setIsLoggedIn(true); // Тоже обновляем состояние в App.js
+                this.props.setIsLoggedIn(true); 
             })
             .catch((error) => {
                 setAuthHeader(null);
