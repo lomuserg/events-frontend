@@ -19,6 +19,11 @@
   position: relative;
 }
 
+.card {
+  padding-left: 20px;
+  position: relative;
+}
+
 .eventCard:hover {
   transform: translateY(-4px);
   background-color: rgba(220, 100, 254, 0.15);
@@ -127,4 +132,38 @@
 
 .darkMode .editButton:hover {
   background-color: #f97316;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}
+
+.markReadButton {
+  padding: 8px 16px;
+  background-color: #3b82f6; /* ярко-синий */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  margin-top: 12px;
+}
+
+.markReadButton:hover {
+  background-color: #2563eb; /* тёмно-синий при наведении */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.markReadButtonDark {
+  background-color: #1e40af; /* темно-синий для тёмной темы */
+  color: white;
+}
+
+.markReadButtonDark:hover {
+  background-color: #1d4ed8;
 }

@@ -119,7 +119,6 @@ export default function Calendar({ isDarkMode }) {
                   </p>
                 </div>
 
-                {/* Кнопка Редактировать внутри карточки */}
                 {event.userEventRole === 'ORGANIZER' && (
                   <Link
                     to={`/main/events/${event.id}/edit`}
