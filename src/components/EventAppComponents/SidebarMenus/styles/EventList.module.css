@@ -167,3 +167,58 @@
 .markReadButtonDark:hover {
   background-color: #1d4ed8;
 }
+
+/* Блок с фильтрами */
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px 0;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+}
+
+/* Группы фильтров */
+.filterGroup {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Для label и input */
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #555;
+}
+
+input[type="date"],
+select,
+input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-top: 4px;
+  width: 140px;
+}
+
+/* Кнопка сброса */
+.resetButton {
+  padding: 8px 14px;
+  background-color: #f97316; /* оранжевый */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.resetButton:hover {
+  background-color: #ea580c;
+}

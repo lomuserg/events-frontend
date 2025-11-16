@@ -9,6 +9,12 @@ export default function Notifications({ isDarkMode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const NOTIFICATION_TYPES = {
+    INVITE: 'Приглашение',
+    REMIND: 'Напоминание',
+    DELETE: 'Отмена мероприятия',
+  };
+
   const fetchNotifications = async () => {
     try {
       const token = localStorage.getItem('auth_token');
@@ -106,14 +112,16 @@ export default function Notifications({ isDarkMode }) {
                 marginBottom: '16px',
               }}
             >
-              <h3 style={{ marginBottom: '6px' }}>{notification.title}</h3>
+              <h3 style={{ marginBottom: '6px' }}>{NOTIFICATION_TYPES[notification.type] || notification.type}</h3>
+              
               <p>
-                <strong>Название:</strong> {notification.message}
+                <strong>Мероприятие: </strong> {notification.message}
               </p>
               
               <p>
                 <strong>Дата:</strong> {formatDate(notification.createdAt)}
               </p>
+              
               <p>
                 <strong>Статус:</strong>{' '}
                 {notification.read ? 'Прочитано' : 'Не прочитано'}

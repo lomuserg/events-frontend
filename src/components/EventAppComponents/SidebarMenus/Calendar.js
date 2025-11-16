@@ -10,19 +10,25 @@ export default function Calendar({ isDarkMode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [filterDate, setFilterDate] = useState("");
+  const [filterCategory, setFilterCategory] = useState("");
+  const [filterLocation, setFilterLocation] = useState("");
+
   const truncateText = (text, maxLength = 15) => {
     return text && text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
   };
 
   const EVENT_CATEGORIES = {
-  CONFERENCE: "Конференция",
-  WORKSHOP: "Мастер-класс",
-  MEETUP: "Встреча",
-  SEMINAR: "Семинар",
-  WEBINAR: "Вебинар",
-  HACKATHON: "Хакатон",
-  TRAINING: "Обучение"
+    CONFERENCE: "Конференция",
+    WORKSHOP: "Мастер-класс",
+    MEETUP: "Встреча",
+    SEMINAR: "Семинар",
+    WEBINAR: "Вебинар",
+    HACKATHON: "Хакатон",
+    TRAINING: "Обучение"
   };
+
+  const getCategoryKeys = () => Object.keys(EVENT_CATEGORIES);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -71,26 +77,93 @@ export default function Calendar({ isDarkMode }) {
     }).format(date);
   };
 
+  const parseDate = (isoString) => new Date(isoString).toISOString().split("T")[0];
+
+  const filteredEvents = events
+    .filter(event => {
+      const eventDate = parseDate(event.eventDateTime);
+      const selectedDate = filterDate;
+
+      if (selectedDate && eventDate !== selectedDate) return false;
+
+      if (filterCategory && event.eventCategory !== filterCategory) return false;
+
+      if (
+        filterLocation &&
+        !event.location.toLowerCase().includes(filterLocation.toLowerCase())
+      )
+        return false;
+
+      return true;
+    })
+    .sort((a, b) => {
+      return a.location.localeCompare(b.location);
+    });
+
   return (
     <div className={appStyles.mainContent}>
       <h2 className={appStyles.mainTitle}>Календарь</h2>
 
-      <div className={`${eventStyles.eventListContainer} ${isDarkMode ? appStyles.darkMode : appStyles.lightMode}`}>
-        {events.length === 0 ? (
-          <p>У вас пока нет созданных мероприятий.</p>
-        ) : (
-          events.map((event) => (
-            <Link
-              key={event.id}
-              to={`/main/events/${event.id}/view`}
-              className={eventStyles.eventCardLink}
+      <div className={appStyles.filters}>
+        <div>
+          <label>
+            Фильтр по дате:
+            <input
+              type="date"
+              value={filterDate}
+              onChange={(e) => setFilterDate(e.target.value)}
+            />
+          </label>
+        </div>
+
+        <div>
+          <label>
+            Фильтр по категории:
+            <select
+              value={filterCategory}
+              onChange={(e) => setFilterCategory(e.target.value)}
             >
-              <div
-                className={`${eventStyles.eventCard} ${
-                  event.userEventRole === 'ORGANIZER'
-                    ? eventStyles.organizerCard
-                    : eventStyles.participantCard
-                }`}
+              <option value="">Все категории</option>
+              {getCategoryKeys().map((key) => (
+                <option key={key} value={key}>
+                  {EVENT_CATEGORIES[key]}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <div>
+          <label>
+            Фильтр по месту:
+            <input
+              type="text"
+              placeholder="Введите место..."
+              value={filterLocation}
+              onChange={(e) => setFilterLocation(e.target.value)}
+            />
+          </label>
+        </div>
+      </div>
+
+      <div className={`${eventStyles.eventListContainer} ${isDarkMode ? appStyles.darkMode : appStyles.lightMode}`}>
+        {filteredEvents.length === 0 ? (
+          <p>Нет мероприятий по заданным критериям.</p>
+        ) : (
+          filteredEvents.map((event) => (
+            <div
+              key={event.id}
+              className={`${eventStyles.eventCard} ${
+                event.userEventRole === 'ORGANIZER'
+                  ? eventStyles.organizerCard
+                  : event.userEventRole === 'PARTICIPANT'
+                    ? eventStyles.participantCard
+                    : ''
+              }`}
+            >
+              <Link
+                to={`/main/events/${event.id}/view`}
+                className={eventStyles.eventCardLink}
               >
                 <div className={eventStyles.cardContent}>
                   <h3>{truncateText(event.title, 23)}</h3>
@@ -105,8 +178,8 @@ export default function Calendar({ isDarkMode }) {
                   <p><strong>Описание:</strong> {truncateText(event.description, 15)}</p>
                   <p>
                     <strong>Категория:</strong>{" "}
-                    {event.eventCategory 
-                      ? EVENT_CATEGORIES[event.eventCategory] || event.eventCategory 
+                    {event.eventCategory
+                      ? EVENT_CATEGORIES[event.eventCategory] || event.eventCategory
                       : "Не указано"}
                   </p>
                   <p>
@@ -118,23 +191,23 @@ export default function Calendar({ isDarkMode }) {
                         : 'Неизвестно'}
                   </p>
                 </div>
+              </Link>
 
-                {event.userEventRole === 'ORGANIZER' && (
-                  <Link
-                    to={`/main/events/${event.id}/edit`}
-                    className={eventStyles.editButtonInsideCard}
-                    onClick={(e) => e.stopPropagation()}
+              {event.userEventRole === 'ORGANIZER' && (
+                <Link
+                  to={`/main/events/${event.id}/edit`}
+                  className={eventStyles.editButtonInsideCard}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    className={eventStyles.editButton}
+                    type="button"
                   >
-                    <button
-                      className={eventStyles.editButton}
-                      type="button"
-                    >
-                      Редактировать
-                    </button>
-                  </Link>
-                )}
-              </div>
-            </Link>
+                    Редактировать
+                  </button>
+                </Link>
+              )}
+            </div>
           ))
         )}
       </div>
