@@ -1,0 +1,26 @@
+.eventHeader {
+  min-width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #222229;
+  color: white;
+  font-size: 2%;
+  z-index: 1000;
+}
+
+.iconMenu {
+  height: 45px;
+  margin-right: 10px;
+}
+
+@media (max-width: 500px) {
+  .eventHeader {
+    display: none;
+  }
+}

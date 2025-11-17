@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
-import { getAuthToken, request } from "./helpers/axios_helper";
-import logo from '../logo.svg';
-import styles from './App.css';
+import { getAuthToken, request } from "./components/helpers/axios_helper.js";
+import logo from './assets/logo.svg';
+import styles from './App.module.css';
 
-import Header from './Header.js';
-import EventHeader from './EventAppComponents/EventHeader.js';
-import EventApp from './EventAppComponents/EventApp';
-import AuthPage from './AuthComponents/AuthPage';
+import Header from './layout/StartPageHeader/StartPageHeader.jsx';
+import EventHeader from './layout/EventsHeader/EventsHeader.jsx';
+import EventApp from './components/EventAppComponents/EventApp.js';
+import AuthPage from './pages/AuthPage/AuthPage.jsx';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -99,13 +99,6 @@ function App() {
         {isLoggedIn ? <EventHeader user={user} /> : <Header pageTitle="Frontend authenticated with JWT" logoSrc={logo} />}
 
         <div className={styles.appContainer}>
-          <div className={styles.sidebar}>
-            {isLoggedIn ? (
-              <button onClick={handleLogout}>Logout</button>
-            ) : (
-              <button onClick={() => setIsLoggedIn(true)}>Login</button>
-            )}
-          </div>
           <div className={styles.content}>
             <Routes>
               <Route path="/" element={isLoggedIn ? <Navigate to="/main/*" /> : <AuthPage onLogin={verifyToken} />} />
