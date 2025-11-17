@@ -39,8 +39,8 @@
   align-items: center;
   justify-content: center;
   padding: 20px 16px 30px;
-  background-color: #cdebf6;
-  color: black;
+  background-color: #146ef5;
+  color: rgb(255, 254, 254);
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -57,7 +57,7 @@
 }
 
 .navItem:hover {
-  background-color: #b3ced7;
+  background-color: #4b93ff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -79,9 +79,8 @@
 }
 
 .card.lightModeCard {
-  background-color: rgba(6, 6, 6, 0.1);
-  color: black;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  background-color: rgba(220, 220, 255, 0.692);
+  color: rgb(5, 5, 5);
 }
 
 .cardFlex {
@@ -114,8 +113,8 @@
   flex: 1 1 auto;
   max-width: 150px;
   padding: 10px 16px;
-  background-color: #93cef5;
-  color: rgb(0, 0, 0);
+  background-color: #1075fa;
+  color: rgb(255, 255, 255);
   border-radius: 8px;
   text-align: center;
   font-weight: bold;

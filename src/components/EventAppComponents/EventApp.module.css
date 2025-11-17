@@ -18,13 +18,13 @@
 
 .header {
   height: 60px;
-  background: #fff;
+  background: #494747;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .eventHeader {
   height: 100px;
-  background-color: #222;
+  background-color: #222229;
   font-size: 1.8em;
 }
 
@@ -68,11 +68,11 @@
   z-index: 999;
 }
 
-.darkMode .sidebar { background-color: #1a1e22; }
-.lightMode .sidebar { background-color: #dfe8f1; }
+.darkMode .sidebar { background-color: #272c3a; }
+.lightMode .sidebar { background-color: #ffffff; }
 
-.darkMode { background: #222735; color: white; }
-.lightMode { background: #c1defd; color: black; }
+.darkMode { background: #2e3342; color: white; }
+.lightMode { background: #f0f5fc; color: rgb(39, 45, 54); }
 
 .nav {
   display: flex;
@@ -83,19 +83,23 @@
 .navItem {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 12px;
   border: none;
   cursor: pointer;
   background-color: transparent;
   transition: background-color 0.3s ease;
+  width: 210px;
+  border-radius: 9px; 
+  justify-content: center;
+  box-sizing: border-box; 
 }
 
 .navItem svg, .themeToggle svg { margin-right: 8px; }
 
-.darkMode .navItem { background-color: #1a1e25; color: white; }
-.lightMode .navItem { background-color: #e0e7f1; color: black; }
+.darkMode .navItem { background-color: #2e3342; color: white; }
+.lightMode .navItem { background-color: rgba(235, 235, 255, 0.692); color: rgb(0, 0, 0); }
 
-.navItem:hover, .themeToggle:hover { background-color: rgba(255, 255, 255, 0.2); }
+.navItem:hover, .themeToggle:hover { background-color: #cfcbcba4; }
 
 .cardContainer {
   display: flex;
@@ -110,8 +114,8 @@
   transition: background-color 0.3s ease;
 }
 
-.darkMode .card { background: #4a4949; color: white; }
-.lightMode .card { background: #cdebf6; color: black; }
+.darkMode .card { background: #f0eeee; color: white; }
+.lightMode .card { background: #d1d7da; color: black; }
 
 .themeToggle, .logoutButton {
   margin-top: auto;

@@ -49,7 +49,7 @@
   font-size: 18px;
   font-weight: 600;
   padding: 14px 20px;
-  background-color: #66b7f1;
+  background-color: #1559d6;
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -58,7 +58,7 @@
 }
 
 .submitButton:hover {
-  background-color: #5993ca;
+  background-color: #567fa5;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -97,7 +97,7 @@
   font-size: 18px;
   font-weight: 600;
   padding: 14px 20px;
-  background-color: #771b11c5;
+  background-color: #c41d0bc5;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 12px;
@@ -107,7 +107,7 @@
 
 .deleteButton:hover:not(:disabled) {
   background-color: #5f120a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(250, 248, 248, 0);
 }
 
 .deleteButton:disabled {
@@ -116,12 +116,12 @@
 }
 
 .darkMode .deleteButton {
-  background-color: #42100a;
+  background-color: #af5e55;
   color: white;
 }
 
 .darkMode .deleteButton:hover:not(:disabled) {
-  background-color: #7e2218;
+  background-color: #bd4f42;
 }
 
 .addParticipantInput {
@@ -130,7 +130,7 @@
 
 .addButton {
   padding: 12px 16px;
-  background-color: #1bc48b;
+  background-color: #17f071;
   color: white;
   border: none;
   border-radius: 12px;
@@ -140,7 +140,7 @@
 }
 
 .addButton:hover:not(:disabled) {
-  background-color: #19b481;
+  background-color: #0eda96;
 }
 
 .addButton:disabled {
