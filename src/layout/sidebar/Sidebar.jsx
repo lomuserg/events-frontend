@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Calendar, Bell, Megaphone, Sun, Moon, LogOut } from "lucide-react";
-import styles from "./EventApp.module.css";
+import styles from "./Sidebar.module.css";
 
 export default function Sidebar({ isDarkMode, toggleTheme, handleLogout }) {
   return (
