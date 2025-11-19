@@ -3,10 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Pen } from 'lucide-react';
 
-import styles from '../SidebarMenus/styles/Events.module.css';
-import appStyles from '../EventApp.module.css';
+import styles from './EventsPage.module.css';
 
-export default function Events({ isDarkMode }) {
+export default function EventsPage({ isDarkMode }) {
   const [nearestEvent, setNearestEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -58,24 +57,24 @@ export default function Events({ isDarkMode }) {
   };
 
   return (
-    <div className={appStyles.mainContent}>
-      <h2 className={appStyles.mainTitle}>Мероприятия</h2>
+    <div className={styles.wrapper}>
+      <h2 className={styles.title}>Мероприятия</h2>
 
-      <div className={`${styles.createEventFormWrapper} ${isDarkMode ? appStyles.darkMode : appStyles.lightMode}`}>
-        <div className={styles.centeredBlockWrapper}>
-          <div className={styles.createEventButton}>
+      <div className={isDarkMode ? styles.themeDark : styles.themeLight}>
+        <div className={styles.centeredBlock}>
+          <div className={styles.createButtonWrapper}>
             <Link to="/main/create-event">
-              <button className={styles.navItem}>
+              <button className={styles.createButton}>
                 <Pen size={28} /> Создать мероприятие
               </button>
             </Link>
           </div>
 
-          <div className={styles.footerCardWrapper}>
+          <div className={styles.cardWrapper}>
             {loading ? (
               <div>Загрузка...</div>
             ) : nearestEvent ? (
-              <div className={`${styles.card} ${isDarkMode ? styles.darkModeCard : styles.lightModeCard}`}>
+              <div className={`${styles.card} ${isDarkMode ? styles.cardDark : styles.cardLight}`}>
                 <h4>Ближайшее мероприятие: {nearestEvent.title}</h4>
                 <p><strong>Дата:</strong> {formatDate(nearestEvent.eventDateTime)}</p>
                 <p><strong>Место:</strong> {nearestEvent.location}</p>
@@ -87,7 +86,7 @@ export default function Events({ isDarkMode }) {
                 )}
               </div>
             ) : (
-              <div className={`${styles.card} ${isDarkMode ? styles.darkModeCard : styles.lightModeCard}`}>
+              <div className={`${styles.card} ${isDarkMode ? styles.cardDark : styles.cardLight}`}>
                 Нет предстоящих мероприятий
               </div>
             )}

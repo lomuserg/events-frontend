@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./AuthPage.module.css";
 import LoginForm from "../../components/auth/LoginForm/LoginForm";
 import WelcomeContent from "../../components/auth/WelcomeContent/WelcomeContent";
-import { request, setAuthHeader } from "../../helpers/axios_helper";
+import { request, setAuthHeader } from "../../../../helpers/axios_helper";
 
 export default function AuthPage({ onLogin }) {
   const [componentToShow, setComponentToShow] = useState("welcome");

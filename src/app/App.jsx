@@ -5,7 +5,7 @@ import { getAuthToken, request } from "../helpers/axios_helper.js";
 import PublicLayout from "../layout/app/PublicLayout/PublicLayout.jsx";
 import PrivateLayout from "../layout/app/PrivateLayout/PrivateLayout.jsx";
 
-import AuthPage from "../pages/AuthPage/AuthPage.jsx";
+import AuthPage from "../features/events/pages/AuthPage/AuthPage.jsx";
 import EventApp from "./MainRouter.jsx";
 
 function App() {

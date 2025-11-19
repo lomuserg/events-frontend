@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import appStyles from '../../EventApp.module.css';
-import formStyles from '../styles/CreateEvent.module.css';
+import appStyles from './EventApp.module.css';
+import formStyles from './CreateEvent.module.css';
 
 export default function EditEvent({ isDarkMode }) {
   const { id: eventId } = useParams();

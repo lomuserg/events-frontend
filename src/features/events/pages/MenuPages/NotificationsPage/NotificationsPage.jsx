@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import styles from '../EventApp.module.css';
-import listStyles from '../SidebarMenus/styles/EventList.module.css';
+import styles from './NotificationsPage.module.css';
 
-export default function Notifications({ isDarkMode }) {
+
+export default function NotificationsPage({ isDarkMode }) {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -95,42 +95,37 @@ export default function Notifications({ isDarkMode }) {
       {notifications.length === 0 ? (
         <p>Нет уведомлений</p>
       ) : (
-        <div
-          className={`${listStyles.cardContainer} ${
-            isDarkMode ? listStyles.darkMode : listStyles.lightMode
-          }`}
-        >
+        <div className={`${styles.cardContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
           {notifications.map((notification) => (
             <div
               key={notification.id}
-              className={`${listStyles.card} ${
-                isDarkMode ? listStyles.darkMode : listStyles.lightMode
-              }`}
+              className={`${styles.card} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
               style={{
                 width: '90%',
                 borderLeft: `6px solid ${notification.read ? '#10b981' : '#f97316'}`,
                 marginBottom: '16px',
               }}
             >
-              <h3 style={{ marginBottom: '6px' }}>{NOTIFICATION_TYPES[notification.type] || notification.type}</h3>
-              
+              <h3 style={{ marginBottom: '6px' }}>
+                {NOTIFICATION_TYPES[notification.type] || notification.type}
+              </h3>
+
               <p>
                 <strong>Мероприятие: </strong> {notification.message}
               </p>
-              
+
               <p>
                 <strong>Дата:</strong> {formatDate(notification.createdAt)}
               </p>
-              
+
               <p>
-                <strong>Статус:</strong>{' '}
-                {notification.read ? 'Прочитано' : 'Не прочитано'}
+                <strong>Статус:</strong> {notification.read ? 'Прочитано' : 'Не прочитано'}
               </p>
 
               {!notification.read && (
                 <button
                   onClick={() => markAsRead(notification.id)}
-                  className={listStyles.markReadButton}
+                  className={styles.markReadButton}
                 >
                   Пометить как прочитанное
                 </button>

@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "./EventApp.module.css";
 
-export default function WelcomeEvents() {
+export default function WelcomePage() {
   return (
     <div className={styles.mainContent}>
       <h2 className={styles.mainTitle}>Добро пожаловать!</h2>

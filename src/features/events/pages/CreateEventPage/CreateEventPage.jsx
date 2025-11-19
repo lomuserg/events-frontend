@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import appStyles from '../EventApp.module.css';
-import formStyles from '../SidebarMenus/styles/CreateEvent.module.css';
+import appStyles from './EventApp.module.css';
+import formStyles from './CreateEvent.module.css';
 
 export default function CreateEvent({ isDarkMode }) {
   const [title, setTitle] = useState('');

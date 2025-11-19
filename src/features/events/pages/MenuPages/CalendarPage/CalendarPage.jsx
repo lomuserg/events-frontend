@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import appStyles from "./CalendarPage.module.css";
 
-import appStyles from "../EventApp.module.css";
-import eventStyles from "../SidebarMenus/styles/EventList.module.css";
-
-export default function Calendar({ isDarkMode }) {
+export default function CalendarPage({ isDarkMode }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [filterDate, setFilterDate] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
   const [filterLocation, setFilterLocation] = useState("");
 
-  const truncateText = (text, maxLength = 15) => {
-    return text && text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
-  };
+  const truncateText = (text, maxLength = 15) =>
+    text && text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
 
   const EVENT_CATEGORIES = {
     CONFERENCE: "Конференция",
@@ -25,7 +21,7 @@ export default function Calendar({ isDarkMode }) {
     SEMINAR: "Семинар",
     WEBINAR: "Вебинар",
     HACKATHON: "Хакатон",
-    TRAINING: "Обучение"
+    TRAINING: "Обучение",
   };
 
   const getCategoryKeys = () => Object.keys(EVENT_CATEGORIES);
@@ -41,9 +37,7 @@ export default function Calendar({ isDarkMode }) {
         }
 
         const response = await axios.get("http://localhost:8080/main/events", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
 
@@ -58,54 +52,42 @@ export default function Calendar({ isDarkMode }) {
     fetchEvents();
   }, []);
 
-  if (loading) {
-    return <div>Загрузка...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+  if (loading) return <div>Загрузка...</div>;
+  if (error) return <div>{error}</div>;
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
-    return new Intl.DateTimeFormat('ru-RU', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Intl.DateTimeFormat("ru-RU", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     }).format(date);
   };
 
   const parseDate = (isoString) => new Date(isoString).toISOString().split("T")[0];
 
   const filteredEvents = events
-    .filter(event => {
+    .filter((event) => {
       const eventDate = parseDate(event.eventDateTime);
-      const selectedDate = filterDate;
-
-      if (selectedDate && eventDate !== selectedDate) return false;
-
+      if (filterDate && eventDate !== filterDate) return false;
       if (filterCategory && event.eventCategory !== filterCategory) return false;
-
       if (
         filterLocation &&
         !event.location.toLowerCase().includes(filterLocation.toLowerCase())
       )
         return false;
-
       return true;
     })
-    .sort((a, b) => {
-      return a.location.localeCompare(b.location);
-    });
+    .sort((a, b) => a.location.localeCompare(b.location));
 
   return (
     <div className={appStyles.mainContent}>
       <h2 className={appStyles.mainTitle}>Календарь</h2>
 
-      <div className={appStyles.filters}>
-        <div>
+      <div className={appStyles.filterBar}>
+        <div className={appStyles.filterGroup}>
           <label>
             Фильтр по дате:
             <input
@@ -116,7 +98,7 @@ export default function Calendar({ isDarkMode }) {
           </label>
         </div>
 
-        <div>
+        <div className={appStyles.filterGroup}>
           <label>
             Фильтр по категории:
             <select
@@ -133,7 +115,7 @@ export default function Calendar({ isDarkMode }) {
           </label>
         </div>
 
-        <div>
+        <div className={appStyles.filterGroup}>
           <label>
             Фильтр по месту:
             <input
@@ -146,26 +128,30 @@ export default function Calendar({ isDarkMode }) {
         </div>
       </div>
 
-      <div className={`${eventStyles.eventListContainer} ${isDarkMode ? appStyles.darkMode : appStyles.lightMode}`}>
+      <div
+        className={`${appStyles.eventListContainer} ${
+          isDarkMode ? appStyles.darkMode : appStyles.lightMode
+        }`}
+      >
         {filteredEvents.length === 0 ? (
           <p>Нет мероприятий по заданным критериям.</p>
         ) : (
           filteredEvents.map((event) => (
             <div
               key={event.id}
-              className={`${eventStyles.eventCard} ${
-                event.userEventRole === 'ORGANIZER'
-                  ? eventStyles.organizerCard
-                  : event.userEventRole === 'PARTICIPANT'
-                    ? eventStyles.participantCard
-                    : ''
+              className={`${appStyles.eventCard} ${
+                event.userEventRole === "ORGANIZER"
+                  ? appStyles.organizerCard
+                  : event.userEventRole === "PARTICIPANT"
+                  ? appStyles.participantCard
+                  : ""
               }`}
             >
               <Link
                 to={`/main/events/${event.id}/view`}
-                className={eventStyles.eventCardLink}
+                className={appStyles.eventCardLink}
               >
-                <div className={eventStyles.cardContent}>
+                <div className={appStyles.cardContent}>
                   <h3>{truncateText(event.title, 23)}</h3>
 
                   {event.eventDateTime && (
@@ -174,35 +160,39 @@ export default function Calendar({ isDarkMode }) {
                     </p>
                   )}
 
-                  <p><strong>Место:</strong> {truncateText(event.location, 20)}</p>
-                  <p><strong>Описание:</strong> {truncateText(event.description, 15)}</p>
+                  <p>
+                    <strong>Место:</strong> {truncateText(event.location, 20)}
+                  </p>
+
+                  <p>
+                    <strong>Описание:</strong> {truncateText(event.description, 15)}
+                  </p>
+
                   <p>
                     <strong>Категория:</strong>{" "}
-                    {event.eventCategory
-                      ? EVENT_CATEGORIES[event.eventCategory] || event.eventCategory
-                      : "Не указано"}
+                    {EVENT_CATEGORIES[event.eventCategory] ||
+                      event.eventCategory ||
+                      "Не указано"}
                   </p>
+
                   <p>
                     Вы:{" "}
-                    {event.userEventRole === 'ORGANIZER'
-                      ? 'Организатор'
-                      : event.userEventRole === 'PARTICIPANT'
-                        ? 'Участник'
-                        : 'Неизвестно'}
+                    {event.userEventRole === "ORGANIZER"
+                      ? "Организатор"
+                      : event.userEventRole === "PARTICIPANT"
+                      ? "Участник"
+                      : "Неизвестно"}
                   </p>
                 </div>
               </Link>
 
-              {event.userEventRole === 'ORGANIZER' && (
+              {event.userEventRole === "ORGANIZER" && (
                 <Link
                   to={`/main/events/${event.id}/edit`}
-                  className={eventStyles.editButtonInsideCard}
+                  className={appStyles.editButtonInsideCard}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button
-                    className={eventStyles.editButton}
-                    type="button"
-                  >
+                  <button className={appStyles.editButton} type="button">
                     Редактировать
                   </button>
                 </Link>

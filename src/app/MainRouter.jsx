@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import WelcomeEvents from "../components/EventAppComponents/WelcomeEvents";
-import Events from "../components/EventAppComponents/SidebarMenus/Events";
-import Calendar from "../components/EventAppComponents/SidebarMenus/Calendar";
-import Notifications from "../components/EventAppComponents/SidebarMenus/Notifications";
-import CreateEvent from "../components/EventAppComponents/SidebarMenus/CreateEvent";
-import EditEvent from "../components/EventAppComponents/SidebarMenus/eventsEdit/EditEvent";
-import ViewEvent from "../components/EventAppComponents/SidebarMenus/eventsView/ViewEvent";
+import WelcomeEvents from "../features/events/pages/WelcomePage/WelcomePage";
+import Events from "../features/events/pages/MenuPages/EventsPage/EventsPage";
+import Calendar from "../features/events/pages/MenuPages/CalendarPage/CalendarPage";
+import Notifications from "../features/events/pages/MenuPages/NotificationsPage/NotificationsPage";
+import CreateEvent from "../features/events/pages/CreateEventPage/CreateEventPage";
+import EditEvent from "../features/events/pages/EditEventPage/EditEventPage";
+import ViewEvent from "../features/events/pages/ViewEventPage/ViewEventPage";
 
 export default function MainRouter({ user }) {
   return (

@@ -1,0 +1,72 @@
+.mainContent {
+flex: 1;
+margin-left: 150px;
+padding: 20px;
+box-sizing: border-box;
+}
+
+
+.mainTitle {
+font-size: 32px;
+font-weight: 800;
+margin-bottom: 24px;
+text-align: center;
+}
+
+
+.filterBar {
+display: flex;
+gap: 20px;
+flex-wrap: wrap;
+margin-bottom: 25px;
+justify-content: center;
+}
+
+
+.filterGroup label {
+display: flex;
+flex-direction: column;
+font-weight: 600;
+gap: 6px;
+}
+
+
+.filterGroup input,
+.filterGroup select {
+padding: 8px 10px;
+border-radius: 8px;
+border: 1px solid #ccc;
+}
+
+
+.eventListContainer {
+padding: 20px;
+border-radius: 12px;
+transition: 0.3s ease;
+}
+
+
+.darkMode.eventListContainer {
+background: #1e1e1e;
+color: white;
+}
+
+
+.lightMode.eventListContainer {
+background: #eef2ff;
+color: black;
+}
+
+
+.eventCard {
+background: rgba(255, 255, 255, 0.08);
+padding: 20px;
+border-radius: 12px;
+margin-bottom: 20px;
+transition: 0.3s ease;
+}
+
+
+.eventCardLink {
+text-decoration: none;
+}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import appStyles from '../../EventApp.module.css';
-import formStyles from '../styles/CreateEvent.module.css';
+import appStyles from './EventApp.module.css';
+import formStyles from './CreateEvent.module.css';
 
-export default function ViewEvent({ isDarkMode }) {
+export default function ViewEventPage({ isDarkMode }) {
   const { id: eventId } = useParams();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
