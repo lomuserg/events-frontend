@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import styles from './NotificationsPage.module.css';
 
-export default function NotificationsPage() {
+export default function NotificationsPage({ sidebarWidth = 0 }) {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -73,11 +72,11 @@ export default function NotificationsPage() {
     fetchNotifications();
   }, []);
 
-  if (loading) return <p>Загрузка уведомлений...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (loading) return <div className={styles.mainContent}>Загрузка уведомлений...</div>;
+  if (error) return <div className={styles.mainContent} style={{ color: 'red' }}>{error}</div>;
 
   return (
-    <div className={styles.mainContent}>
+    <div className={styles.mainContent} style={{ paddingLeft: sidebarWidth }}>
       <h2 className={styles.mainTitle}>Уведомления</h2>
 
       {notifications.length === 0 ? (
@@ -88,25 +87,12 @@ export default function NotificationsPage() {
             <div
               key={notification.id}
               className={styles.card}
-              style={{
-                width: '90%',
-                borderLeft: `6px solid ${notification.read ? '#10b981' : '#f97316'}`,
-                marginBottom: '16px',
-              }}
+              style={{ borderLeft: `6px solid ${notification.read ? '#10b981' : '#f97316'}` }}
             >
               <h3>{NOTIFICATION_TYPES[notification.type] || notification.type}</h3>
-
-              <p>
-                <strong>Мероприятие:</strong> {notification.message}
-              </p>
-
-              <p>
-                <strong>Дата:</strong> {formatDate(notification.createdAt)}
-              </p>
-
-              <p>
-                <strong>Статус:</strong> {notification.read ? 'Прочитано' : 'Не прочитано'}
-              </p>
+              <p><strong>Мероприятие:</strong> {notification.message}</p>
+              <p><strong>Дата:</strong> {formatDate(notification.createdAt)}</p>
+              <p><strong>Статус:</strong> {notification.read ? 'Прочитано' : 'Не прочитано'}</p>
 
               {!notification.read && (
                 <button

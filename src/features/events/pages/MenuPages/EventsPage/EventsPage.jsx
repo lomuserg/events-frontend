@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Pen } from 'lucide-react';
 import styles from './EventsPage.module.css';
 
-export default function EventsPage({ sidebarWidth = 220 }) {
+export default function EventsPage() {
   const [nearestEvent, setNearestEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -52,41 +52,38 @@ export default function EventsPage({ sidebarWidth = 220 }) {
     }).format(new Date(isoString));
 
   return (
-    <div
-      className={styles.wrapper}
-      style={{ marginLeft: sidebarWidth, transition: "margin-left 0.2s ease" }}
-    >
-      <h2 className={styles.title}>Мероприятия</h2>
+  <div
+    className={styles.wrapper}
+  >
+    <h2 className={styles.title}>Мероприятия</h2>
 
-      <div className={styles.centeredBlock}>
-        <div className={styles.createButtonWrapper}>
-          <Link to="/main/create-event">
-            <button className={styles.createButton}>
-              <Pen size={28} /> Создать мероприятие
-            </button>
-          </Link>
-        </div>
+    <div className={styles.flexRow}>
+      <div className={styles.leftBlock}>
+        <Link to="/main/create-event" className={styles.fullWidthLink}>
+          <button className={styles.createButton}>
+            <Pen size={28} /> Создать мероприятие
+          </button>
+        </Link>
+      </div>
 
-        <div className={styles.cardWrapper}>
-          {loading ? (
-            <div>Загрузка...</div>
-          ) : nearestEvent ? (
-            <div className={styles.card}>
-              <h4>Ближайшее мероприятие: {nearestEvent.title}</h4>
-              <p><strong>Дата:</strong> {formatDate(nearestEvent.eventDateTime)}</p>
-              <p><strong>Место:</strong> {nearestEvent.location}</p>
-              <p><strong>Описание:</strong> {nearestEvent.description}</p>
-              {nearestEvent.userEventRole === 'ORGANIZER' && (
-                <Link to={`/main/events/${nearestEvent.id}/edit`} className={styles.editButton}>
-                  Редактировать
-                </Link>
-              )}
-            </div>
-          ) : (
-            <div className={styles.card}>Нет предстоящих мероприятий</div>
-          )}
-        </div>
+      <div className={styles.rightBlock}>
+        {loading ? (
+          <div>Загрузка...</div>
+        ) : nearestEvent ? (
+          <div className={styles.card}>
+            <h4>Ближайшее мероприятие: {nearestEvent.title}</h4>
+            <p><strong>Дата:</strong> {formatDate(nearestEvent.eventDateTime)}</p>
+            {nearestEvent.userEventRole === 'ORGANIZER' && (
+              <Link to={`/main/events/${nearestEvent.id}/edit`} className={styles.editButton}>
+                Редактировать
+              </Link>
+            )}
+          </div>
+        ) : (
+          <div className={styles.card}>Нет предстоящих мероприятий</div>
+        )}
       </div>
     </div>
+  </div>
   );
 }

@@ -1,11 +1,11 @@
 .mainContent {
   flex: 1;
-  margin-left: 150px;
   padding: 20px;
   box-sizing: border-box;
-  background: #eef2ff;
+  background: ffffff ;
   color: black;
   min-height: 100vh;
+  transition: none;
 }
 
 .mainTitle {
@@ -16,20 +16,25 @@
 }
 
 .eventListContainer {
+  display: flex;
+  flex-wrap: wrap;      
+  gap: 20px;
   padding: 20px;
   border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
-  transition: 0.3s ease;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  justify-content: center; 
 }
 
 .eventCard {
-  background: #f8f9ff;
+  flex: 1 1 calc(33.333% - 20px); 
+  max-width: 300px;               
+  background: #ffffff;
   padding: 20px;
   border-radius: 12px;
-  margin-bottom: 20px;
-  transition: box-shadow 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
 .eventCardLink {
@@ -76,8 +81,15 @@
   border-left: 4px solid #10b981;
 }
 
+@media (max-width: 900px) {
+  .eventCard {
+    flex: 1 1 calc(50% - 20px);
+  }
+}
+
 @media (max-width: 600px) {
   .eventCard {
+    flex: 1 1 100%;
     padding: 16px;
   }
 

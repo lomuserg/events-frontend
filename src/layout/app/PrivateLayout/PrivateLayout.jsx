@@ -13,7 +13,7 @@ export default function PrivateLayout({ user, logout }) {
 
       <Sidebar handleLogout={logout} onWidthChange={setSidebarWidth} />
 
-      <main 
+      <main
         className={styles.mainContent}
         style={{ marginLeft: sidebarWidth, transition: 'margin-left 0.2s ease' }}
       >

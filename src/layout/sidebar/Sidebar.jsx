@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import { Calendar, Bell, Megaphone, LogOut } from "lucide-react";
 import styles from "./Sidebar.module.css";
 
-export default function Sidebar({ handleLogout }) {
+export default function Sidebar({ handleLogout, onWidthChange }) {
   const sidebarRef = useRef(null);
   const [width, setWidth] = useState(220);
   const [isResizing, setIsResizing] = useState(false);
 
+  // передача ширины родителю
+  useEffect(() => {
+    if (onWidthChange) onWidthChange(width);
+  }, [width, onWidthChange]);
+
+  // обработка перетаскивания
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (isResizing) {

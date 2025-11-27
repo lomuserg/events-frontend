@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import appStyles from "./CalendarPage.module.css";
 
-export default function CalendarPage() {
+export default function CalendarPage({ sidebarWidth = 0 }) {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -34,9 +34,6 @@ export default function CalendarPage() {
     fetchEvents();
   }, []);
 
-  if (loading) return <div>Загрузка...</div>;
-  if (error) return <div>{error}</div>;
-
   const formatDate = (isoString) =>
     new Intl.DateTimeFormat("ru-RU", {
       day: "numeric",
@@ -49,8 +46,11 @@ export default function CalendarPage() {
   const truncateText = (text, maxLength = 15) =>
     text && text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
 
+  if (loading) return <div className={appStyles.mainContent}>Загрузка...</div>;
+  if (error) return <div className={appStyles.mainContent}>{error}</div>;
+
   return (
-    <div className={appStyles.mainContent}>
+    <div className={appStyles.mainContent} style={{ paddingLeft: sidebarWidth }}>
       <h2 className={appStyles.mainTitle}>Календарь</h2>
 
       <div className={appStyles.eventListContainer}>
