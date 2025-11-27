@@ -1,78 +1,23 @@
-.appContainer {
-  display: flex;
-  min-height: 98vh;
-  padding-top: 60px;
-}
-
-.header, .eventHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  color: white;
-  z-index: 1000;
-}
-
-.header {
-  height: 60px;
-  background: #494747;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.eventHeader {
-  height: 100px;
-  background-color: #222229;
-  font-size: 1.8em;
-}
-
-.iconMenu {
-  height: 60px;
-  margin-right: 10px;
-}
-
-.mainContent {
-  flex: 1;
-  margin-left: 150px;
-  padding: 20px 20px 20px;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-.formWrapper {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-
-.mainTitle {
-  font-size: 36px;
-  font-weight: 800;
-  margin-bottom: 30px;
-}
-
 .sidebar {
   position: fixed;
+  top: 70px;
   left: 0;
-  top: 100px;
-  width: 250px;
-  height: calc(100vh - 60px);
-  padding: 20px;
+  height: calc(100vh - 70px);
+  padding: 20px 10px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  transition: background-color 0.3s ease;
+  background-color: #2a2e33;
+  color: rgb(209, 216, 226);
   overflow-y: auto;
+  overflow-x: hidden;
   z-index: 999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  min-width: 80px;
+  max-width: 220px;
+  user-select: none;
+  border-radius: 0; 
 }
-
-.darkMode .sidebar { background-color: #272c3a; }
-.lightMode .sidebar { background-color: #ffffff; }
-
-.darkMode { background: #2e3342; color: white; }
-.lightMode { background: #f0f5fc; color: rgb(39, 45, 54); }
 
 .nav {
   display: flex;
@@ -84,54 +29,84 @@
   display: flex;
   align-items: center;
   padding: 12px;
-  border: none;
-  cursor: pointer;
-  background-color: transparent;
-  transition: background-color 0.3s ease;
-  width: 210px;
-  border-radius: 9px; 
-  justify-content: center;
-  box-sizing: border-box; 
-}
-
-.navItem svg, .themeToggle svg { margin-right: 8px; }
-
-.darkMode .navItem { background-color: #2e3342; color: white; }
-.lightMode .navItem { background-color: rgba(235, 235, 255, 0.692); color: rgb(0, 0, 0); }
-
-.navItem:hover, .themeToggle:hover { background-color: #cfcbcba4; }
-
-.cardContainer {
-  display: flex;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-}
-
-.card {
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
+  background-color: #23272b;
+  border-radius: 9px;
+  width: 100%;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: rgb(209, 216, 226);
   transition: background-color 0.3s ease;
 }
 
-.darkMode .card { background: #f0eeee; color: white; }
-.lightMode .card { background: #d1d7da; color: black; }
+.navItem svg {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
 
-.themeToggle, .logoutButton {
+.navItem:hover {
+  background-color: rgba(100, 120, 140, 0.3);
+}
+
+.navItem span {
+  transition: opacity 0.2s ease, width 0.2s ease, margin 0.2s ease;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.navItem.collapsed span {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  visibility: hidden;
+}
+
+.bottomButtons {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.logoutButton {
   padding: 10px;
   display: flex;
   align-items: center;
   border: none;
-  background: none;
+  background-color: #23272b;
   cursor: pointer;
-  transition: 0.3s;
-  border-radius: 8px;
+  border-radius: 0; 
   gap: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
 }
 
-.app-container {
-  display: flex;
-  height: calc(100vh - 100px);
-  margin-top: 100px;
+.logoutButton:hover {
+  background-color: rgba(42, 90, 161, 0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.logoutButton span {
+  transition: opacity 0.2s ease, width 0.2s ease, margin 0.2s ease;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.logoutButton.collapsed span {
+  opacity: 0;
+  width: 0;
+  margin: 0;
+  visibility: hidden;
+}
+
+.resizer {
+  width: 10px;
+  cursor: ew-resize;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background: transparent;
+  z-index: 999;
 }

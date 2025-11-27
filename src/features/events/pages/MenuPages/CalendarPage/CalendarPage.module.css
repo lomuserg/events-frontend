@@ -1,72 +1,88 @@
 .mainContent {
-flex: 1;
-margin-left: 150px;
-padding: 20px;
-box-sizing: border-box;
+  flex: 1;
+  margin-left: 150px;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #eef2ff;
+  color: black;
+  min-height: 100vh;
 }
-
 
 .mainTitle {
-font-size: 32px;
-font-weight: 800;
-margin-bottom: 24px;
-text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  text-align: center;
 }
-
-
-.filterBar {
-display: flex;
-gap: 20px;
-flex-wrap: wrap;
-margin-bottom: 25px;
-justify-content: center;
-}
-
-
-.filterGroup label {
-display: flex;
-flex-direction: column;
-font-weight: 600;
-gap: 6px;
-}
-
-
-.filterGroup input,
-.filterGroup select {
-padding: 8px 10px;
-border-radius: 8px;
-border: 1px solid #ccc;
-}
-
 
 .eventListContainer {
-padding: 20px;
-border-radius: 12px;
-transition: 0.3s ease;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+  transition: 0.3s ease;
 }
-
-
-.darkMode.eventListContainer {
-background: #1e1e1e;
-color: white;
-}
-
-
-.lightMode.eventListContainer {
-background: #eef2ff;
-color: black;
-}
-
 
 .eventCard {
-background: rgba(255, 255, 255, 0.08);
-padding: 20px;
-border-radius: 12px;
-margin-bottom: 20px;
-transition: 0.3s ease;
+  background: #f8f9ff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-
 .eventCardLink {
-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cardContent h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.cardContent p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.editButtonInsideCard {
+  display: block;
+  margin-top: 12px;
+}
+
+.editButton {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 50px;
+  background-color: #4f46e5;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.editButton:hover {
+  background-color: #4338ca;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.organizerCard {
+  border-left: 4px solid #4f46e5;
+}
+
+.participantCard {
+  border-left: 4px solid #10b981;
+}
+
+@media (max-width: 600px) {
+  .eventCard {
+    padding: 16px;
+  }
+
+  .editButton {
+    width: 100%;
+    border-radius: 12px;
+  }
 }

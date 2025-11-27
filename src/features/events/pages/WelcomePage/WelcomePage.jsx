@@ -1,4 +1,4 @@
-import styles from "./EventApp.module.css";
+import styles from "./WelcomePage.module.css";
 
 export default function WelcomePage() {
   return (

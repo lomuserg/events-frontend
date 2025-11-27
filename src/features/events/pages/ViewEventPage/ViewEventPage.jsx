@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import appStyles from './EventApp.module.css';
-import formStyles from './CreateEvent.module.css';
-
-export default function ViewEventPage({ isDarkMode }) {
+import appStyles from './ViewEventPage.module.css';
+export default function ViewEventPage() {
   const { id: eventId } = useParams();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -38,9 +36,7 @@ export default function ViewEventPage({ isDarkMode }) {
         }
 
         const response = await axios.get(`http://localhost:8080/main/events/${eventId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
 
@@ -73,24 +69,24 @@ export default function ViewEventPage({ isDarkMode }) {
   return (
     <div className={appStyles.mainContent}>
       <h2 className={appStyles.mainTitle}>{title}</h2>
-      <div className={`${formStyles.createEventFormWrapper} ${isDarkMode ? formStyles.darkMode : formStyles.lightMode}`}>
-        <div className={formStyles.formGroup}>
+      <div className={appStyles.createEventFormWrapper}>
+        <div className={appStyles.formGroup}>
           <label>Название мероприятия:</label>
           <p>{title}</p>
         </div>
-        <div className={formStyles.formGroup}>
+        <div className={appStyles.formGroup}>
           <label>Описание:</label>
           <p>{description}</p>
         </div>
-        <div className={formStyles.formGroup}>
+        <div className={appStyles.formGroup}>
           <label>Дата и время:</label>
           <p>{eventDateTime}</p>
         </div>
-        <div className={formStyles.formGroup}>
+        <div className={appStyles.formGroup}>
           <label>Место проведения:</label>
           <p>{location}</p>
         </div>
-        <div className={formStyles.formGroup}>
+        <div className={appStyles.formGroup}>
           <p>
             <strong>Категория:</strong>{" "}
             {eventCategory 
@@ -99,12 +95,12 @@ export default function ViewEventPage({ isDarkMode }) {
           </p>
         </div>
 
-        <div className={`${formStyles.participantSidebar} ${isDarkMode ? formStyles.darkMode : formStyles.lightMode}`}>
+        <div className={appStyles.participantSidebar}>
           <h4>Участники</h4>
           {participants.length > 0 ? (
-            <ul className={formStyles.participantList}>
+            <ul className={appStyles.participantList}>
               {participants.map((login, index) => (
-                <li key={index} className={formStyles.participantItem}>
+                <li key={index} className={appStyles.participantItem}>
                   {login}
                   {login === currentUserLogin && (
                     <span style={{ marginLeft: '8px', color: '#facc15' }}>👑</span>
@@ -113,12 +109,13 @@ export default function ViewEventPage({ isDarkMode }) {
               ))}
             </ul>
           ) : (
-            <p className={formStyles.noParticipants}>Нет участников</p>
+            <p className={appStyles.noParticipants}>Нет участников</p>
           )}
         </div>
+
         {userEventRole === 'ORGANIZER' && (
-          <div className={formStyles.formGroup}>
-            <Link to={`/main/events/${eventId}/edit`} className={formStyles.editButton}>
+          <div className={appStyles.formGroup}>
+            <Link to={`/main/events/${eventId}/edit`} className={appStyles.editButton}>
               Редактировать
             </Link>
           </div>

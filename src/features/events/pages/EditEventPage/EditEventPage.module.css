@@ -62,23 +62,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.darkMode .input,
-.darkMode .textarea,
-.darkMode .select {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.darkMode .submitButton {
-  background-color: #4d69b0;
-  color: white;
-}
-
-.darkMode .submitButton:hover {
-  background-color: #3a5490;
-}
-
-.location-input {
+.locationInput {
   color: white !important;
 }
 
@@ -115,19 +99,6 @@
   cursor: not-allowed;
 }
 
-.darkMode .deleteButton {
-  background-color: #af5e55;
-  color: white;
-}
-
-.darkMode .deleteButton:hover:not(:disabled) {
-  background-color: #bd4f42;
-}
-
-.addParticipantInput {
-  flex: 1;
-}
-
 .addButton {
   padding: 12px 16px;
   background-color: #17f071;
@@ -148,19 +119,14 @@
   cursor: not-allowed;
 }
 
-.participantListContainer {
-  margin-top: 24px;
-}
-
 .participantList {
   list-style: none;
-  padding: 0;
+  padding: 10px;
   margin: 0;
   max-height: 150px;
   overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 10px;
   background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -169,25 +135,9 @@
   margin-bottom: 6px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-}
-
-.darkMode .participantList {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.darkMode .participantItem {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.editLayout {
   display: flex;
-  gap: 40px;
-}
-
-.eventForm {
-  flex: 2;
-  min-width: 300px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .participantSidebar {
@@ -203,27 +153,9 @@
   margin-bottom: 20px;
 }
 
-.darkMode .participantSidebar {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.darkMode .participantItem {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.eventCard {
-  background-color: rgba(233, 186, 247, 0.1);
-  border-radius: 12px;
-  padding: 20px;
-  width: 300px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  min-height: 300px; 
+.noParticipants {
+  opacity: 0.7;
+  font-style: italic;
 }
 
 .removeButton {
@@ -238,35 +170,4 @@
 
 .removeButton:hover {
   color: #dc2626;
-}
-
-.editButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  background-color: #a85b24;
-  color: #fffaf1;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-  width: 100%;
-  text-align: center;
-  text-decoration: none;
-}
-
-.editButton:hover {
-  background-color: #8d4e21;
-}
-
-.darkMode .editButton {
-  background-color: #fb923c;
-  color: white;
-}
-
-.darkMode .editButton:hover {
-  background-color: #f97316;
 }

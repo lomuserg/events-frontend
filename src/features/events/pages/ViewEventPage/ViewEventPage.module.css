@@ -1,0 +1,91 @@
+.mainContent {
+  flex: 1;
+  margin-left: 150px;
+  padding: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.mainTitle {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
+
+.createEventFormWrapper {
+  padding: 70px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.participantSidebar {
+  flex: 1;
+  max-width: 550px;
+  padding: 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.participantSidebar h4 {
+  margin-bottom: 12px;
+}
+
+.participantList {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.participantItem {
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.noParticipants {
+  font-style: italic;
+  color: #888;
+}
+
+.editButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #a85b24;
+  color: #fffaf1;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+}
+
+.editButton:hover {
+  background-color: #8d4e21;
+}

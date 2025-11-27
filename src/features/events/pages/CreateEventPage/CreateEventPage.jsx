@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import appStyles from './EventApp.module.css';
-import formStyles from './CreateEvent.module.css';
+import appStyles from './CreateEventPage.module.css';
 
-export default function CreateEvent({ isDarkMode }) {
+export default function CreateEvent() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [eventDateTime, setEventDateTime] = useState('');
@@ -62,65 +61,66 @@ export default function CreateEvent({ isDarkMode }) {
     <div className={appStyles.mainContent}>
       <h2 className={appStyles.mainTitle}>Создать мероприятие</h2>
 
-      <div className={`${formStyles.createEventFormWrapper} ${isDarkMode ? appStyles.darkMode : appStyles.lightMode}`}>
+      <div className={appStyles.createEventFormWrapper}>
         <form onSubmit={handleSubmit}>
-          <div className={formStyles.formGroup}>
+          
+          <div className={appStyles.formGroup}>
             <label htmlFor="title">Название мероприятия:</label>
             <input
               id="title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className={formStyles.input}
+              className={appStyles.input}
               placeholder="Введите название"
               required
             />
           </div>
 
-          <div className={formStyles.formGroup}>
+          <div className={appStyles.formGroup}>
             <label htmlFor="description">Описание:</label>
             <textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className={formStyles.textarea}
+              className={appStyles.textarea}
               placeholder="Введите описание мероприятия"
               required
             />
           </div>
 
-          <div className={formStyles.formGroup}>
+          <div className={appStyles.formGroup}>
             <label htmlFor="eventDateTime">Дата и время:</label>
             <input
               id="eventDateTime"
               type="datetime-local"
               value={eventDateTime}
               onChange={(e) => setEventDateTime(e.target.value)}
-              className={formStyles.input}
+              className={appStyles.input}
               required
             />
           </div>
 
-          <div className={formStyles.formGroup}>
+          <div className={appStyles.formGroup}>
             <label htmlFor="location">Место проведения:</label>
             <input
               id="location"
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className={`${formStyles.input} ${formStyles.locationInput}`}
+              className={`${appStyles.input} ${appStyles.locationInput}`}
               placeholder="Введите место"
               required
             />
           </div>
 
-          <div className={formStyles.formGroup}>
+          <div className={appStyles.formGroup}>
             <label htmlFor="eventCategory">Категория:</label>
             <select
               id="eventCategory"
               value={eventCategory}
               onChange={(e) => setEventCategory(e.target.value)}
-              className={`${formStyles.select} ${formStyles.input}`}
+              className={`${appStyles.select} ${appStyles.input}`}
               required
             >
               <option value="">Выберите категорию</option>
@@ -134,15 +134,16 @@ export default function CreateEvent({ isDarkMode }) {
             </select>
           </div>
 
-          <div className={formStyles.formGroup}>
+          <div className={appStyles.formGroup}>
             <button
               type="submit"
-              className={formStyles.submitButton}
+              className={appStyles.submitButton}
               disabled={loading}
             >
               {loading ? "Создание..." : "Создать"}
             </button>
           </div>
+
         </form>
       </div>
     </div>

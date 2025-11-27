@@ -1,0 +1,13 @@
+.mainContent {
+  flex: 1;
+  margin-left: 150px;
+  padding: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.mainTitle {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 30px;
+}
