@@ -57,6 +57,22 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+.emptyBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.noNotifications {
+  font-size: 20px;
+  font-weight: 600;
+  color: #6b7280;
+  opacity: 0.9;
+}
+
+
 @media (max-width: 600px) {
   .card {
     width: 95%;

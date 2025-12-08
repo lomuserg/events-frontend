@@ -8,12 +8,10 @@ export default function Sidebar({ handleLogout, onWidthChange }) {
   const [width, setWidth] = useState(220);
   const [isResizing, setIsResizing] = useState(false);
 
-  // передача ширины родителю
   useEffect(() => {
     if (onWidthChange) onWidthChange(width);
   }, [width, onWidthChange]);
 
-  // обработка перетаскивания
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (isResizing) {

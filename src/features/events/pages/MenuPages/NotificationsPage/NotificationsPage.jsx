@@ -80,7 +80,9 @@ export default function NotificationsPage({ sidebarWidth = 0 }) {
       <h2 className={styles.mainTitle}>Уведомления</h2>
 
       {notifications.length === 0 ? (
-        <p>Нет уведомлений</p>
+        <div className={styles.emptyBlock}>
+          <p className={styles.noNotifications}>Нет уведомлений</p>
+        </div>
       ) : (
         <div className={styles.cardContainer}>
           {notifications.map((notification) => (
