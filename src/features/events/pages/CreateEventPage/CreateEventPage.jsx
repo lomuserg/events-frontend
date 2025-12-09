@@ -1,151 +1,16 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import EventForm from "../../components/EventForm/EventForm.jsx";
+import { createEvent } from "../../../../features/events/api/EventsApi.jsx";
+import "./CreateEventPage.module.css";
 
-import appStyles from './CreateEventPage.module.css';
-
-export default function CreateEvent() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [eventDateTime, setEventDateTime] = useState('');
-  const [location, setLocation] = useState('');
-  const [eventCategory, setEventCategory] = useState('CONFERENCE');
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const token = localStorage.getItem("auth_token");
-    if (!token) {
-      alert("Вы не авторизованы");
-      setLoading(false);
-      return;
-    }
-
-    const eventDto = {
-      title,
-      description,
-      eventDateTime,
-      location,
-      eventCategory
-    };
-
+export default function CreateEventPage() {
+  const handleSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        'http://localhost:8080/main/events',
-        eventDto,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          withCredentials: true
-        }
-      );
-
+      await createEvent(data);
       alert("Мероприятие создано!");
-      console.log(response.data);
-    } catch (error) {
-      console.error("Ошибка создания мероприятия:", error);
-      if (error.response) {
-        alert(`Ошибка: ${error.response.data.message || "Не удалось создать мероприятие"}`);
-      } else {
-        alert("Не удалось отправить запрос. Проверьте подключение.");
-      }
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      alert("Ошибка создания");
     }
   };
 
-  return (
-    <div className={appStyles.mainContent}>
-      <h2 className={appStyles.mainTitle}>Создать мероприятие</h2>
-
-      <div className={appStyles.createEventFormWrapper}>
-        <form onSubmit={handleSubmit}>
-          
-          <div className={appStyles.formGroup}>
-            <label htmlFor="title">Название мероприятия:</label>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className={appStyles.input}
-              placeholder="Введите название"
-              required
-            />
-          </div>
-
-          <div className={appStyles.formGroup}>
-            <label htmlFor="description">Описание:</label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className={appStyles.textarea}
-              placeholder="Введите описание мероприятия"
-              required
-            />
-          </div>
-
-          <div className={appStyles.formGroup}>
-            <label htmlFor="eventDateTime">Дата и время:</label>
-            <input
-              id="eventDateTime"
-              type="datetime-local"
-              value={eventDateTime}
-              onChange={(e) => setEventDateTime(e.target.value)}
-              className={appStyles.input}
-              required
-            />
-          </div>
-
-          <div className={appStyles.formGroup}>
-            <label htmlFor="location">Место проведения:</label>
-            <input
-              id="location"
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className={`${appStyles.input} ${appStyles.locationInput}`}
-              placeholder="Введите место"
-              required
-            />
-          </div>
-
-          <div className={appStyles.formGroup}>
-            <label htmlFor="eventCategory">Категория:</label>
-            <select
-              id="eventCategory"
-              value={eventCategory}
-              onChange={(e) => setEventCategory(e.target.value)}
-              className={`${appStyles.select} ${appStyles.input}`}
-              required
-            >
-              <option value="">Выберите категорию</option>
-              <option value="CONFERENCE">Конференция</option>
-              <option value="WORKSHOP">Мастер-класс</option>
-              <option value="MEETUP">Встреча</option>
-              <option value="SEMINAR">Семинар</option>
-              <option value="WEBINAR">Вебинар</option>
-              <option value="HACKATHON">Хакатон</option>
-              <option value="TRAINING">Обучение</option>
-            </select>
-          </div>
-
-          <div className={appStyles.formGroup}>
-            <button
-              type="submit"
-              className={appStyles.submitButton}
-              disabled={loading}
-            >
-              {loading ? "Создание..." : "Создать"}
-            </button>
-          </div>
-
-        </form>
-      </div>
-    </div>
-  );
+  return <EventForm mode="create" onSubmit={handleSubmit} />;
 }

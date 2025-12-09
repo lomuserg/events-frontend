@@ -1,126 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
-import appStyles from './ViewEventPage.module.css';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import EventForm from "../../components/EventForm/EventForm.jsx";
+import { getEvent } from "../../api/EventsApi.jsx";
+import "./ViewEventPage.module.css";
+
 export default function ViewEventPage() {
-  const { id: eventId } = useParams();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [eventDateTime, setEventDateTime] = useState('');
-  const [location, setLocation] = useState('');
-  const [eventCategory, setEventCategory] = useState('');
-  const [participants, setParticipants] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [userEventRole, setUserEventRole] = useState(null);
-
-  const userDto = JSON.parse(localStorage.getItem("user"));
-  const currentUserLogin = userDto?.login;
-
-  const EVENT_CATEGORIES = {
-    CONFERENCE: "Конференция",
-    WORKSHOP: "Мастер-класс",
-    MEETUP: "Встреча",
-    SEMINAR: "Семинар",
-    WEBINAR: "Вебинар",
-    HACKATHON: "Хакатон",
-    TRAINING: "Обучение"
-  };
+  const { id } = useParams();
+  const [event, setEvent] = useState(null);
 
   useEffect(() => {
-    const fetchEvent = async () => {
-      try {
-        const token = localStorage.getItem("auth_token");
-        if (!token) {
-          alert("Вы не авторизованы");
-          return;
-        }
+    getEvent(id).then(setEvent);
+  }, [id]);
 
-        const response = await axios.get(`http://localhost:8080/main/events/${eventId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-          withCredentials: true,
-        });
+  if (!event) return <p>Загрузка...</p>;
 
-        const event = response.data;
-        setTitle(event.title);
-        setDescription(event.description);
-        setLocation(event.location);
-        setEventCategory(event.eventCategory || '');
-        setEventDateTime(event.eventDateTime);
-        setUserEventRole(event.userEventRole);
-
-        if (event.participantsLogins) {
-          setParticipants(event.participantsLogins);
-        }
-      } catch (error) {
-        console.error("Ошибка загрузки мероприятия:", error);
-        alert("Не удалось загрузить данные мероприятия");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEvent();
-  }, [eventId]);
-
-  if (loading) {
-    return <p>Загрузка...</p>;
-  }
-
-  return (
-    <div className={appStyles.mainContent}>
-      <h2 className={appStyles.mainTitle}>{title}</h2>
-      <div className={appStyles.createEventFormWrapper}>
-        <div className={appStyles.formGroup}>
-          <label>Название мероприятия:</label>
-          <p>{title}</p>
-        </div>
-        <div className={appStyles.formGroup}>
-          <label>Описание:</label>
-          <p>{description}</p>
-        </div>
-        <div className={appStyles.formGroup}>
-          <label>Дата и время:</label>
-          <p>{eventDateTime}</p>
-        </div>
-        <div className={appStyles.formGroup}>
-          <label>Место проведения:</label>
-          <p>{location}</p>
-        </div>
-        <div className={appStyles.formGroup}>
-          <p>
-            <strong>Категория:</strong>{" "}
-            {eventCategory 
-              ? EVENT_CATEGORIES[eventCategory] || eventCategory 
-              : "Не указано"}
-          </p>
-        </div>
-
-        <div className={appStyles.participantSidebar}>
-          <h4>Участники</h4>
-          {participants.length > 0 ? (
-            <ul className={appStyles.participantList}>
-              {participants.map((login, index) => (
-                <li key={index} className={appStyles.participantItem}>
-                  {login}
-                  {login === currentUserLogin && (
-                    <span style={{ marginLeft: '8px', color: '#facc15' }}>👑</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className={appStyles.noParticipants}>Нет участников</p>
-          )}
-        </div>
-
-        {userEventRole === 'ORGANIZER' && (
-          <div className={appStyles.formGroup}>
-            <Link to={`/main/events/${eventId}/edit`} className={appStyles.editButton}>
-              Редактировать
-            </Link>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  return <EventForm mode="view" initialData={event} />;
 }
